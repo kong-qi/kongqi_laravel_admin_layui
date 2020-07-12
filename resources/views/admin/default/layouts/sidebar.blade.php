@@ -21,7 +21,7 @@
 
 
                             @if(acan_anys(array_column($v['_child'],'name')))
-                                <li data-name="home" class="layui-nav-item layui-nav-itemed">
+                                <li data-name="home" class="layui-nav-item ">
 
                                         <a href="javascript:;" >
                                             <i class="{{ $v['icon'] }}"></i>

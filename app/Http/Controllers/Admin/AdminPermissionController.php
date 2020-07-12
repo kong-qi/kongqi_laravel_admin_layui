@@ -253,7 +253,7 @@ class AdminPermissionController extends BaseCurlController
             [
                 'field' => 'menu_show',
                 'type' => 'radio',
-                'name' => '是否显示菜单'.($show['menu_show']??''),
+                'name' => '是否显示菜单',
                 'default' => 0,
                 'data' => $this->uiService->trueFalseData()
 

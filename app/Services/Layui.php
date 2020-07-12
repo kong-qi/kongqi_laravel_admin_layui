@@ -118,6 +118,7 @@ class Layui implements Ui
                 //上传路径接口
                 $v['upload_url'] = $v['upload_url'] ?? '';//单独设置上传接口地址
                 $v['file_type'] = $v['file_type'] ?? '';//上传文件类型
+                $v['oss_type'] = $v['oss_type'] ?? 'local';//上传文件类型
                 $v['accept_type'] = $v['accept_type'] ?? '';//前端接受的文件上传类型，默认是images
                 $v['group_id'] = $v['group_id'] ?? '';//分组ID
                 $v['place_url'] = $v['place_url'] ?? '';//单独设置文件空间地址
@@ -133,6 +134,9 @@ class Layui implements Ui
                 if ($v['accept_type']) {
                     $up_attr .= ' data-accept_type=' . $v['accept_type'] . ' ';
                 }
+                if ($v['oss_type']) {
+                    $up_attr .= ' data-oss_type=' . $v['oss_type'] . ' ';
+                }
 
                 $place_attr = 'data-value_name=' . $v['value_name'];
                 if ($v['place_url']) {
@@ -144,8 +148,11 @@ class Layui implements Ui
                 if ($v['group_id']) {
                     $place_attr .= ' data-group_id=' . $v['group_id'] . ' ';
                 }
+                if ($v['oss_type']) {
+                    $place_attr .= ' data-oss_type=' . $v['oss_type'] . ' ';
+                }
                 $v['place_attr'] = $place_attr;
-                $v['up_attr'] = $up_attr;
+                $v['up_attr'] =  $up_attr;
                 $v['addClass'] = $v['addClass'] . ' upload-area-input';
 
                 if ($this->show && $v['type']=='imgMore') {

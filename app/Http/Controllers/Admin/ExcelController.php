@@ -38,6 +38,7 @@ class ExcelController extends BaseCurlController
                 'verify' => 'rq',
                 'file_type' => 'office',
                 'accept_type' => 'file',
+                'oss_type'=>'local',//存储到本地
                 'value_name' => 'origin_path',//这里取得上传的值，这里不需要补域名的路径
             ],
             [

@@ -29,6 +29,8 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     if (!upload_url) {
       upload_url = g_upload_url;
     }
+    //上传设置存储类型
+    var oss_type = that.data('oss_type') || 'local';
 
     var more = that.data('more');
     if (more == 1) {
@@ -56,7 +58,8 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       data: {
         _token: $('[name="csrf-token"]').attr('content'),
         file_type: file_type,//文件类型
-        group_id: group_id || 0
+        group_id: group_id || 0,
+        oss_type:oss_type
       },
       multiple: more,
       accept: accept_type,//接受文件上传的类型
@@ -129,6 +132,8 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     //文件类型
     var file_type = that.data('file_type');
 
+
+
     var value_name = that.data('value_name');
     if (!value_name) {
       value_name = 'path';
@@ -151,7 +156,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       //找到图片显示区域
       parentObj.find(".iupload-area-img-show").removeClass('none').attr('src', res.view_src);
 
-      if (file_type == 'file') {
+      if (file_type != 'image') {
         //如果是文件，则需要输出文件名
         parentObj.find(".iupload-area-img-show").next('p').remove();
         parentObj.find(".iupload-area-img-show").after('<p>' + res.tmp_name + '</p>');

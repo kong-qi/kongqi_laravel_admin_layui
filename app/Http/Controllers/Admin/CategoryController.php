@@ -317,6 +317,25 @@ class CategoryController extends BaseCurlController
 
         }
     }
+    //批量导入之后的层级修改
+    public function afterImportSuccessEvent($insert_data)
+    {
+        foreach ($insert_data as $k=>$v){
+            $model=Category::where('name',$v['name'])->first();
+            if ($model->parent_id != 0) {
+                //上级
+                $next = $this->model->find($model->parent_id)->path_level;
+                $next = $next ? $next . '-' : '';
+                $model->path_level = $next . $model->id;
+                $model->save();
+            } else {
+                $model->path_level = $model->id;
+                $model->save();
+            }
+
+        }
+    }
+
     //刪除检查
     public function checkDelet($id_arr)
     {

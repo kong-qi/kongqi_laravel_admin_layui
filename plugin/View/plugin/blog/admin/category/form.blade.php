@@ -1,0 +1,1 @@
+@include('plugin.tpl.indexBtnGroup')

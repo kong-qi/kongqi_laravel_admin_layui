@@ -29,8 +29,6 @@
                     @case('checkbox')
                     @include('plugin.tpl.form.checkbox',['form_item'=>$form_tpl_item])
                     @break
-                    @case('editor')
-                    @include('plugin.tpl.form.editor',['form_item'=>$form_tpl_item])
                     @break
                     @case('img')
                     @include('plugin.tpl.form.img',['form_item'=>$form_tpl_item])

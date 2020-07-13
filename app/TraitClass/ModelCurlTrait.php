@@ -205,7 +205,7 @@ trait ModelCurlTrait
         }
         if ($this->isCanDel()) {
             $data[] = [
-                'class' => 'btn-danger',
+                'class' => 'layui-btn-danger',
                 'name' => '删除',
                 'data' => [
                     'data-type' => "allDel"

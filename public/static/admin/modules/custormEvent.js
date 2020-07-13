@@ -255,12 +255,7 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
 
   });
 
-  //点击事件
-  $(document).on('click', '*[ui-event]', function () {
-    var othis = $(this)
-      , attrEvent = othis.attr('ui-event');
-    ui_events[attrEvent] && ui_events[attrEvent].call(this, othis);
-  });
+
   collapse();
 
   //折叠
@@ -294,6 +289,7 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
 
   //监听事件
   var ui_events = {
+    //弹出信息
     msg: function (othis) {
       var title = othis.data('title');
       var text = othis.data('content');
@@ -303,12 +299,11 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
         , content: text
       });
     },
-
+    //图片参考
     viewImg: function (othis) {
       var src = othis.data('src');
       custormEvent.viewImg(src);
     },
-
     //打开layui iframe
     openIframe: function (othis) {
       var w = othis.data('w');
@@ -342,7 +337,12 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
     }
 
   };
-
+  //点击事件
+  $(document).on('click', '*[ui-event]', function () {
+    var othis = $(this)
+      , attrEvent = othis.attr('ui-event');
+    ui_events[attrEvent] && ui_events[attrEvent].call(this, othis);
+  });
 
   exports('custormEvent', custormEvent);
 });

@@ -64,10 +64,20 @@ trait QueryWhereTrait
     public function whereByQueryIsInstall($value)
     {
         $data = [
-
             'is_install' => [
                 'type' => '=',
                 'value' => $value
+            ]
+        ];
+        $this->addWhere($data);
+    }
+    public function whereByQueryIsChecked($value)
+    {
+        $data = [
+            //'is_checked'表示字段
+            'is_checked' => [
+                'type' => '=',//搜索条件类型
+                'value' => $value //搜索值
             ]
         ];
         $this->addWhere($data);

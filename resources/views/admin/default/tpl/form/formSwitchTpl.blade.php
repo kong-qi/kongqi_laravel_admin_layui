@@ -20,7 +20,6 @@
                     @include('admin.default.tpl.form.select',['form_item'=>$form_tpl_item])
                     @break
                     @case('textarea')
-                    @case('editor')
                     @include('admin.default.tpl.form.textarea',['form_item'=>$form_tpl_item])
                     @break
                     @case('radio')

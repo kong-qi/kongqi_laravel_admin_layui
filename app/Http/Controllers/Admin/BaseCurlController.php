@@ -95,7 +95,7 @@ class BaseCurlController extends BaseController
         return $item;
     }
     public function listHandleBtnCreate($item){
-        return  UiService::editDelTpl($this->isCanEdit(),$this->isCanDel());;
+        return  UiService::editDelTpl($this->isCanEdit(),$this->isCanDel());
     }
 
 

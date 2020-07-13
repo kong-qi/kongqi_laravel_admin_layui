@@ -80,6 +80,8 @@ class ArticleController extends BaseCurlController
         return $data;
     }
 
+
+
     //3.设置搜索数据表单
     public function setOutputSearchFormTpl($shareData)
     {
@@ -120,8 +122,6 @@ class ArticleController extends BaseCurlController
     //4.编辑和添加页面表单数据
     public function setOutputUiCreateEditForm($show = '')
     {
-
-
         $data = [
             [
                 'group_name' => '基础',
@@ -223,10 +223,30 @@ class ArticleController extends BaseCurlController
             ]
 
         ];
-
         //赋值到ui数组里面必须是`form`的key值
         $this->uiBlade['form'] = $data;
     }
+
+    //表单验证规则
+
+    public function checkRule($id = '')
+    {
+        if($id){
+            //$id值存在，表示编辑的规则，可以写你的验证规则，跟laravel写法一样，只是抽出来而已
+        }
+        return [
+            'name'=>'required',
+            'category_id'=>'required'
+        ];
+    }
+    public function checkRuleFieldName()
+    {
+        return [
+            'name'=>'名称',
+            'category_id'=>'分类'
+        ];
+    }
+
 
     //弹窗大小
     public function layuiOpenWidth()

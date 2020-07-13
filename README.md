@@ -30,6 +30,8 @@
 - PHP7.2以上版本
 - MySQL v5.7.7及更高版本
 - Laravel 6.0,低于这个版本也可以，但不能低于 laravel 5.4版本
+
+
 ### 最新学习社区-黑白课堂
 http://www.heibaiketang.com
 
@@ -115,7 +117,7 @@ DB_STRICT=false
 ADMIN_URL=null
 #资源文件是否增加http域名前缀
 RES_HTTP_URL=null
-​
+
 #上传设置
 # 上传目录
 UPLOAD_DIR=/upload
@@ -176,7 +178,9 @@ COS_ENCRYPT=
 composer install 
 ```
 
-4. 修改数据库信息
+4.修改数据库信息
+
+
 数据库引擎必须是`InnoDB` , 字符集 `utf8mb4`  
 因为有些同学，他们用了 `mysql8` ,但是默认的引擎使用的 `myisam` ,所以新建库的时候需要改下这个，如果不懂如何操作，就百度下，如何修改数据库默认搜索引擎。 否则安装的时候会报 索引长度问题。
 
@@ -189,9 +193,10 @@ DB_USERNAME=数据库账号
 DB_PASSWORD=数据库密码
 ```
 
-5. 绑定一个本地域名到目录下 `public`  
+5.绑定一个本地域名到目录下 `public`  
 
-6. 重写
+
+6.重写
 
 > Apaceh
 
@@ -232,7 +237,7 @@ location / {
 }
 ```
 
-7. 执行数据库迁移
+7.执行数据库迁移
 这里已经移除了在线安装
 
 ```
@@ -245,12 +250,15 @@ php artisan db:seed
 
 ```
 
-8. 登录你的后台
+8.登录你的后台
 访问地址
 
 ```
 域名/admin
 ```
+
+后台默认账号：`kongqi`  
+密码：`kongqi1688`
 
 
 安装完成，感谢您的使用

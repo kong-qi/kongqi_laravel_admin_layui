@@ -285,6 +285,302 @@ php artisan db:seed
 ![](https://heibaiketang.oss-cn-shenzhen.aliyuncs.com/system/5.png
 )  
 
+## 新手入门快速开发
+## 新手入门
+我们安装完之后，第一步就是想做我们的数据的增删改查列表这些，那么我们需要哪些步骤了。我们系统已经给你们封装好了方法，只有根据用即可，当然你也可以完成按`Laravel`的写法写，这个不冲突，2者都可以，做到共存，随心编程。
+
+比如我们创建一个控制器
+```
+php artisan make:controller Admin\NewsController
+```
+创建模型和数据表
+```
+php artisan make:model Models\News -m
+```
+修改数据模型,继承下基本
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class News extends BaseModel
+{
+    //
+}
+```
+
+修改数据库迁移
+```
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateNewsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('news', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->comment('标题');
+            $table->integer('views')->default(0)->comment('查看量');
+            $table->string('thumb')->comment('缩略图')->nullable();
+            $table->text('content')->comment('正文内容');
+            $table->integer('is_checked')->default(0)->comment('状态');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('news');
+    }
+}
+
+
+```
+```
+php artisan migrate
+```
+编写路由 `Route/admin.php`
+![描述](https://www.heibaiketang.com/upload/images/20200713/31329953003f53ac2d2d5840c76de1df37448.png)  
+后台菜单添加下  
+![描述](https://www.heibaiketang.com/upload/images/20200713/49cf84d0c33bffca9f1ee75184d5470e3769.png)  
+![描述](https://www.heibaiketang.com/upload/images/20200713/73490a95481669d08bdc442b329440de71549.png)  
+添加之后刷新就可以看到菜单了。
+
+### 步骤如下
+- 0.数据模型，数据表，路由准备好
+- 1.设置数据模型
+- 2.首页搜索部分
+- 3.首页按钮
+- 4.首页数据列表字段显示
+- 5.首页数据字段附加
+- 6.添加和编辑页面字段输出
+- 7.添加编辑数据验证
+- 8.操作数据的监听
+
+### 编写过程
+刚才我们创建了`NewsController`这个控制器，继承下CURL控制器
+```
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+
+use Illuminate\Http\Request;
+
+class NewsController extends BaseCurlController
+{
+    
+}
+
+```
+
+**1.这里操作之前需要定义好模型和数据**
+
+```
+  public $pageName='新闻管理';
+ public function setModel()
+    {
+        return $this->model = new News();
+    }
+
+```
+
+**2.设置首页列表数据**
+
+```
+//2.首页的数据表格数组
+    public function indexCols()
+    {
+        //这里99%跟layui的表格设置参数一样
+        $data = [
+            [
+                'type' => 'checkbox'
+            ],
+            [
+                'field' => 'id',
+                'width' => 80,
+                'title' => '编号',
+                'sort' => 1,
+                'align' => 'center'
+            ],
+            [
+                'field' => 'name',
+                'minWidth' => 150,
+                'title' => '名称',
+                'align' => 'center',
+
+            ],
+
+            [
+                'field' => 'is_checked_html',
+                'minWidth' => 80,
+                'title' => '状态',
+                'align' => 'center',
+            ],
+            [
+                'field' => 'created_at',
+                'minWidth' => 150,
+                'title' => '发布时间',
+                'align' => 'center'
+            ],
+            [
+                'field' => 'handle',
+                'minWidth' => 150,
+                'title' => '操作',
+                'align' => 'center'
+            ]
+        ];
+        //要返回给数组
+        return $data;
+    }
+```
+![描述](https://www.heibaiketang.com/upload/images/20200713/45f7661de53cb3edd73437f25a2e538073802.png)  
+
+现在就看到这样了。我们还需要增加搜索
+```
+ //3.设置搜索表单部分
+    public function setOutputSearchFormTpl($shareData)
+    {
+        $data = [
+            [
+                'field' => 'id',
+                'type' => 'text',
+                'name' => 'ID',
+            ],
+            [
+                'field' => 'query_like_name',//这个搜索写的查询条件在app/TraitClass/QueryWhereTrait.php 里面写
+                'type' => 'text',
+                'name' => '名称',
+            ],
+
+            [
+                'field' => 'query_is_checked',
+                'type' => 'select',
+                'name' => '是否启用',
+                'default' => '',
+                'data' => $this->uiService->trueFalseData(1)
+
+            ]
+
+        ];
+        //赋值到ui数组里面必须是`search`的key值
+        $this->uiBlade['search'] = $data;
+    }
+```
+![描述](https://www.heibaiketang.com/upload/images/20200713/b703ad8d352b4501c7dda9a9d02872946377.png)  
+
+看到搜索部分了吧
+
+**3.添加和编辑的数据列表  **
+
+```
+ //4.编辑和添加页面表单数据
+    public function setOutputUiCreateEditForm($show = '')
+    {
+
+        $data = [
+            [
+                'field' => 'name',
+                'type' => 'text',
+                'name' => '标题',
+                'must' => 1,
+                'verify' => 'rq'
+            ],
+            [
+                'field' => 'views',
+                'type' => 'number',
+                'name' => '查看量',
+                'must' => 1,
+                'verify' => 'rq',
+                'default'=>0
+            ],
+            [
+                'field' => 'thumb',
+                'type' => 'img',
+                'name' => '缩略图',
+                'verify' => 'img'
+            ],
+            [
+                'field' => 'is_checked',
+                'type' => 'radio',
+                'name' => '是否启用',
+                'verify' => '',
+                'default' => 1,
+                'data' => $this->uiService->trueFalseData()
+            ],
+            [
+                'field' => 'content',
+                'type' => 'editor',
+                'name' => '内容',
+                'verify' => 'rq',
+                'must' => 1
+            ]
+
+        ];
+
+        //赋值到ui数组里面必须是`form`的key值
+        $this->uiBlade['form'] = $data;
+    }
+```
+![描述](https://www.heibaiketang.com/upload/images/20200713/4a5fb27f99fff1058f7fa7aa9bf72d523708.png)  
+感觉弹窗不够大，来修改下
+```
+ public function layuiOpenWidth()
+    {
+        return '700px'; // TODO: Change the autogenerated stub
+    }
+    public function layuiOpenHeight()
+    {
+        return '800px'; // TODO: Change the autogenerated stub
+    }
+```
+![描述](https://www.heibaiketang.com/upload/images/20200713/eb62d6afeb0ddfd7bba0bd8781ae601685154.png)  
+
+![描述](https://www.heibaiketang.com/upload/images/20200713/71087f3cb6964a1699b10a28149c4cae8748.png)  
+添加就可以了。这样我们就完成了，最简单的增删改查。
+
+我们还需要加后端数据**表单验证**  
+```
+//5.表单验证
+    public function checkRule($id = '')
+    {
+        //$id不为空是表示编辑操作
+        //这里我都写公用，所以写一个
+        return [
+            'name'=>'required',
+            'content'=>'required',
+            'views'=>'required'
+        ];
+    }
+    //6.表单对应的字段
+    public function checkRuleFieldName()
+    {
+        return [
+            'name'=>'标题',
+            'content'=>'正文',
+            'views'=>'查看量'
+        ];
+    }
+```
+
+这样就完成了最基本的**增删改查操作**
+
 ## 贡献
 
 感谢laravel,Layui,Jquery

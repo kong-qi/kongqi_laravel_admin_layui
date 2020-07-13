@@ -29,7 +29,7 @@
                     @include('admin.default.tpl.form.checkbox',['form_item'=>$form_tpl_item])
                     @break
                     @case('editor')
-                    @include('admin.default.tpl.form.editor',['form_item'=>$form_tpl_item])
+                    @include('admin.default.tpl.form.textarea',['form_item'=>$form_tpl_item])
                     @break
                     @case('img')
                     @include('admin.default.tpl.form.img',['form_item'=>$form_tpl_item])

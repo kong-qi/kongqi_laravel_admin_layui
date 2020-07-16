@@ -14,7 +14,7 @@ layui.define(function (exports) {
       }
       localStorage.setItem(this.cacheName, JSON.stringify(cache_navs));
       //后续再补充
-      return localStorage.setItem("admin_on_nav", (key));
+      return localStorage.setItem(this.cacheName+"_on", (key));
 
     },
     //取得

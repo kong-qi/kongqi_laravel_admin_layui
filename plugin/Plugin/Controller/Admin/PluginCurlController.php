@@ -44,7 +44,7 @@ class PluginCurlController extends PluginController
         //更加模板来注入
         app()->bind(
             'App\Services\Ui',
-            'App\Services\BootstrapUi'
+            'App\Services\Layui'
         );
 
     }

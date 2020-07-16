@@ -21,7 +21,7 @@ class CategoryController extends BaseCurlController
     //那些页面不共享，需要单独设置的方法
     //设置页面的名称
     public $pageName = '分类栏目';
-    public $denyCommonBladePathActionName = ['index'];
+    public $denyCommonBladePathActionName = ['index','create','edit'];
 
     //1.设置模型
     public function setModel()
@@ -206,12 +206,12 @@ class CategoryController extends BaseCurlController
 
             [
                 'field' => 'parent_id',
-                'type' => 'select',
                 'name' => '上级',
                 'must' => 1,
                 'verify' => 'rq',
                 'default' => 0,
-                'data' => $this->uiService->mergeModelData(1, Category::checked()->pluck('name', 'id')->toArray(), '根级')
+                'blade_name'=>'adminPermission.parent',
+                'type'=>'blade',
             ],
             [
                 'field' => 'sort',
@@ -234,6 +234,18 @@ class CategoryController extends BaseCurlController
         //赋值给UI数组里面,必须是form为key
         $this->uiBlade['form'] = $data;
 
+    }
+    //编辑和添加页面共享数据
+    public function createEditShareData($id = '')
+    {
+
+        $cate = $this->getModel()->checked()->get()->toArray();
+        $cate=array_merge([['id'=>0,'cn_name'=>'根级','name'=>'','parent_id'=>0]],$cate);
+
+        $cate = tree($cate,'id','parent_id','children');
+
+
+        return [ 'category' => $cate];
     }
 
     //表单验证

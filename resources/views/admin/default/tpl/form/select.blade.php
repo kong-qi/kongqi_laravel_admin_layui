@@ -1,4 +1,4 @@
-<select ui-event="{{ $form_item['event']??'' }}" type="{{ $form_item['type']??'text' }}"
+<select lay-search ui-event="{{ $form_item['event']??'' }}" type="{{ $form_item['type']??'text' }}"
        name="{{ $form_item['field']??'' }}" data-tips="{{ $form_item['tips']??'' }}"
        lay-verify="{{ $form_item['verify']??'' }}" class="layui-input {{ $form_item['addClass'] }}"
        id="input-{{ $form_item['id']??'' }}" lay-filter="{{ $form_item['filter']??'' }}" {{ $form_item['attr']??'' }}

@@ -187,6 +187,7 @@ class CategoryController extends BaseCurlController
             $name['type'] = 'text';
 
         }
+
         $data = [
             [
                 'field' => 'name',
@@ -204,7 +205,7 @@ class CategoryController extends BaseCurlController
                 'must' => 1,
                 'verify' => 'rq',
                 'default' => 0,
-                'data' => $this->uiService->mergeModelData(1, Category::checked()->pluck('name', 'id')->toArray(), '根级')
+                'data' => array_merge([['id'=>0,'name'=>'根级','parent_id'=>0]],$this->uiService->treeData(Category::checked()->get()->toArray()))
             ],
             [
                 'field' => 'sort',

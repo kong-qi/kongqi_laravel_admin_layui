@@ -264,6 +264,7 @@ class Layui implements Ui
      */
     public function treeData($data, $parentId = 0, $depth = 4, $id = 'id', $name = 'name')
     {
+
         $data = get_tree_option($data, $parentId);
         $ndata = [];
         foreach ($data as $k => $v) {
@@ -272,6 +273,7 @@ class Layui implements Ui
                 'name' => str_repeat("-", $v['depth'] * $depth) . $v[$name]
             ];
         }
+
 
         return $ndata;
     }

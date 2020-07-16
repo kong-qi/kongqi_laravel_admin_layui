@@ -128,6 +128,7 @@ layui.extend({
 
   //对外输出
   exports('index', {
-    openTabsPage: openTabsPage
+    openTabsPage: openTabsPage,
+    cacheNav:cacheNav
   });
 });

@@ -1,9 +1,10 @@
 layui.define(function (exports) {
 
   var cacheNav = {
+    cacheName:'admin_navs',
     //设置缓存
     set: function (key, text, href) {
-      var cache_navs = localStorage.getItem("admin_navs");
+      var cache_navs = localStorage.getItem(this.cacheName);
       cache_navs = JSON.parse(cache_navs);
       cache_navs = cache_navs || {};
 
@@ -11,22 +12,22 @@ layui.define(function (exports) {
         title: text.replace(/(^\s*)|(\s*$)|'ဆ'/g, "") || '',
         href: href
       }
-      localStorage.setItem("admin_navs", JSON.stringify(cache_navs));
+      localStorage.setItem(this.cacheName, JSON.stringify(cache_navs));
       //后续再补充
       return localStorage.setItem("admin_on_nav", (key));
 
     },
     //取得
     get: function () {
-      cache_navs = localStorage.getItem("admin_navs");
+      cache_navs = localStorage.getItem(this.cacheName);
       cache_navs = JSON.parse(cache_navs);
       return cache_navs || {};
     },
     setOn: function (key) {
-      return localStorage.setItem("admin_on_nav", (key));
+      return localStorage.setItem(this.cacheName+"_on", (key));
     },
     getOn: function () {
-      return localStorage.getItem("admin_on_nav");
+      return localStorage.getItem(this.cacheName+"_on");
     },
     deleteKey: function (key) {
       try {
@@ -35,7 +36,7 @@ layui.define(function (exports) {
           //删除
           delete navs[key];
           //写入
-          localStorage.setItem("admin_navs", JSON.stringify(navs));
+          localStorage.setItem(this.cacheName, JSON.stringify(navs));
         }
       } catch (e) {
 
@@ -45,11 +46,11 @@ layui.define(function (exports) {
     },
     //
     clearAll: function () {
-      localStorage.setItem("admin_navs", JSON.stringify({}));
+      localStorage.setItem(this.cacheName, JSON.stringify({}));
     },
     //其他
     clearOther: function (key, text, href) {
-      localStorage.setItem("admin_navs", JSON.stringify({}));
+      localStorage.setItem(this.cacheName, JSON.stringify({}));
       cache_navs = {};
       this.set(key, text, href);
     }

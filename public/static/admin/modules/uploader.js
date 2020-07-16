@@ -128,17 +128,12 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
    */
   function uploadOne(obj, accept_type) {
     var that = $(obj);
-
     //文件类型
     var file_type = that.data('file_type');
-
-
-
     var value_name = that.data('value_name');
     if (!value_name) {
       value_name = 'path';
     }
-
     //使用场景
     accept_type = accept_type || 'images';
     file_type = file_type || 'image';
@@ -149,13 +144,11 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     if (that.data('accept_type')) {
       accept_type = that.data('accept_type');
     }
-
     return uploadApi(that, file_type, accept_type, function (res) {
       //找到父
       var parentObj = $(that.data("target"));
       //找到图片显示区域
       parentObj.find(".iupload-area-img-show").removeClass('none').attr('src', res.view_src);
-
       if (file_type != 'image') {
         //如果是文件，则需要输出文件名
         parentObj.find(".iupload-area-img-show").next('p').remove();

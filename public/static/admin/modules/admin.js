@@ -12,6 +12,9 @@ layui.define(['view', 'verify', 'uform', 'dropdown', 'custormEvent', 'cacheNav',
   var md5 = layui.md5;
   var contextMenu=layui.contextMenu;
 
+  //设置导航缓存名称
+  cacheNav.cacheName="admin_navs";
+
 
 
   var $ = layui.jquery

@@ -71,7 +71,7 @@ class UiService
      * @param int $false_value
      * @return string
      */
-    public static function switchTpl( $field,$item, $id = 0, $text = "启用|禁用", $true_value = 1, $false_value = 0)
+    public static function switchTpl( $field,$item, $id = 0, $text = "启用|禁用", $true_value = 1, $false_value = 0,$is_reload=0)
     {
 
         $value = $item[$field];
@@ -79,7 +79,7 @@ class UiService
             $id = $item['id'];
         }
         //$text=lang($text);
-        $html = '<input type="checkbox" data-true="' . $true_value . '" data-false_value="' . $false_value . '"  
+        $html = '<input type="checkbox" data-is_reload="'.$is_reload.'" data-true="' . $true_value . '" data-false_value="' . $false_value . '"  
         lay-skin="switch" lay-text="' . $text . '" lay-filter="table-checked"
                 value="' . $value . '" data-id="' . $id . '"  
                 data-field="' . $field . '"  ' . ($value == $true_value ? 'checked' : '') . '>';

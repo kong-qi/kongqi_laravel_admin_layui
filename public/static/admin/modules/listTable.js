@@ -287,6 +287,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
     var true_value = $(this).data('true_value') || 1;
     var false_value = $(this).data('false_value') || 0;
     var value = obj.elem.checked ? true_value : false_value;
+    var isReload = $(this).data('is_reload') || 0;//是否重载入
     var id = $(this).data('id');
     field = field || 'is_checked';
     //ajax操作
@@ -295,7 +296,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
       field_value: value,
       ids: id
     };
-    custormEvent.postData(listConfig.edit_field_url, data, 0, '', function (res) {
+    custormEvent.postData(listConfig.edit_field_url, data, isReload, '', function (res) {
       if (res.code == 200) {
         obj.elem.checked = obj.elem.checked;
         form.render();

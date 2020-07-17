@@ -51,7 +51,7 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
         layer.close(index); //关闭弹层
       };
       if (callFun) {
-        yesFun = callFun();
+        yesFun = callFun;
       }
       layerOpen.show(url, config, yesFun, btn);
     },

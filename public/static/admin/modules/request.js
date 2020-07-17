@@ -43,7 +43,7 @@ layui.define(['layer', 'loader'], function (exports) {
           if (isLoding) {
             setTimeout(function () {
               loader.close();
-            }, 1500)
+            }, 500)
           }
           return success && success(res)
         },
@@ -51,7 +51,7 @@ layui.define(['layer', 'loader'], function (exports) {
           if (isLoding) {
             setTimeout(function () {
               loader.close();
-            }, 1500)
+            }, 500)
           }
           return fail && fail(res)
         },

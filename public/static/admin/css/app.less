@@ -10,7 +10,7 @@
 //定义一个函数
 .createMp(@name,@name2){
     @direction:t,b,l,r,'';
-    @directionClass:5,10,15,20,25,50;
+    @directionClass:5,10,15,20,25,30,35,40,45,50,100;
     @directionClassName:top,bottom,left,right;
     .loop(@i) when (@i < length(@direction)){
 
@@ -580,4 +580,16 @@ button.close {
     height: .9em;
     vertical-align: middle;
 
+}
+
+.text-center{
+    text-align: center !important;
+}
+.text-right{
+    text-align: right !important;
+}
+.line{
+    background: #e6e6e6;
+    height: 1px;
+    margin: 20px 0;
 }

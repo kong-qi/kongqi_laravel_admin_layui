@@ -2,7 +2,7 @@
 @section('content')
     <div class="ml-2 mr-2">
         <form class="layui-form ui-form">
-            @include('plugin.tpl.form.form')
+            @include('plugin.tpl.form.form',['showSubmit'=>''])
         </form>
     </div>
 

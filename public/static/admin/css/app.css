@@ -17,6 +17,21 @@
 .mt-25 {
   margin-top: 25px;
 }
+.mt-30 {
+  margin-top: 30px;
+}
+.mt-35 {
+  margin-top: 35px;
+}
+.mt-40 {
+  margin-top: 40px;
+}
+.mt-45 {
+  margin-top: 45px;
+}
+.mt-50 {
+  margin-top: 50px;
+}
 .mb-5 {
   margin-bottom: 5px;
 }
@@ -31,6 +46,21 @@
 }
 .mb-25 {
   margin-bottom: 25px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+.mb-35 {
+  margin-bottom: 35px;
+}
+.mb-40 {
+  margin-bottom: 40px;
+}
+.mb-45 {
+  margin-bottom: 45px;
+}
+.mb-50 {
+  margin-bottom: 50px;
 }
 .ml-5 {
   margin-left: 5px;
@@ -47,6 +77,21 @@
 .ml-25 {
   margin-left: 25px;
 }
+.ml-30 {
+  margin-left: 30px;
+}
+.ml-35 {
+  margin-left: 35px;
+}
+.ml-40 {
+  margin-left: 40px;
+}
+.ml-45 {
+  margin-left: 45px;
+}
+.ml-50 {
+  margin-left: 50px;
+}
 .mr-5 {
   margin-right: 5px;
 }
@@ -61,6 +106,21 @@
 }
 .mr-25 {
   margin-right: 25px;
+}
+.mr-30 {
+  margin-right: 30px;
+}
+.mr-35 {
+  margin-right: 35px;
+}
+.mr-40 {
+  margin-right: 40px;
+}
+.mr-45 {
+  margin-right: 45px;
+}
+.mr-50 {
+  margin-right: 50px;
 }
 .pt-5 {
   padding-top: 5px;
@@ -77,6 +137,21 @@
 .pt-25 {
   padding-top: 25px;
 }
+.pt-30 {
+  padding-top: 30px;
+}
+.pt-35 {
+  padding-top: 35px;
+}
+.pt-40 {
+  padding-top: 40px;
+}
+.pt-45 {
+  padding-top: 45px;
+}
+.pt-50 {
+  padding-top: 50px;
+}
 .pb-5 {
   padding-bottom: 5px;
 }
@@ -91,6 +166,21 @@
 }
 .pb-25 {
   padding-bottom: 25px;
+}
+.pb-30 {
+  padding-bottom: 30px;
+}
+.pb-35 {
+  padding-bottom: 35px;
+}
+.pb-40 {
+  padding-bottom: 40px;
+}
+.pb-45 {
+  padding-bottom: 45px;
+}
+.pb-50 {
+  padding-bottom: 50px;
 }
 .pl-5 {
   padding-left: 5px;
@@ -107,6 +197,21 @@
 .pl-25 {
   padding-left: 25px;
 }
+.pl-30 {
+  padding-left: 30px;
+}
+.pl-35 {
+  padding-left: 35px;
+}
+.pl-40 {
+  padding-left: 40px;
+}
+.pl-45 {
+  padding-left: 45px;
+}
+.pl-50 {
+  padding-left: 50px;
+}
 .pr-5 {
   padding-right: 5px;
 }
@@ -121,6 +226,21 @@
 }
 .pr-25 {
   padding-right: 25px;
+}
+.pr-30 {
+  padding-right: 30px;
+}
+.pr-35 {
+  padding-right: 35px;
+}
+.pr-40 {
+  padding-right: 40px;
+}
+.pr-45 {
+  padding-right: 45px;
+}
+.pr-50 {
+  padding-right: 50px;
 }
 .border-default {
   border: 1px solid #e6e6e6;
@@ -601,5 +721,16 @@ button.close {
   width: 1px;
   height: 0.9em;
   vertical-align: middle;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.line {
+  background: #e6e6e6;
+  height: 1px;
+  margin: 20px 0;
 }
 /*# sourceMappingURL=app.css.map */

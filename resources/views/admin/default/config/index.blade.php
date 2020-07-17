@@ -2,7 +2,7 @@
 @section('content')
 
         <form class="layui-form layui-form-block">
-            @include('admin.default.tpl.form.form')
+            @include('admin.default.tpl.form.form',['showSubmit'=>''])
         </form>
 
 

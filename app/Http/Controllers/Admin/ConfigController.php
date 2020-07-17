@@ -60,6 +60,15 @@ class ConfigController extends BaseCurlController
                         'verify' => ''
                     ],
                     [
+                        'field' => 'map',
+                        'type' => 'map',
+                        'name' => '地图坐标',
+                        'must' => 0,
+                        'verify' => '',
+                        'default'=>'',
+                        'mark' => ''
+                    ],
+                    [
                         'field' => 'cache_version',
                         'type' => 'text',
                         'name' => '后台缓存版本号',

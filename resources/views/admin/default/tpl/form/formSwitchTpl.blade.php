@@ -46,6 +46,10 @@
                     @case('blade')
                     @include('admin.default.'.$form_tpl_item['blade_name'],['form_item'=>$form_tpl_item])
                     @break
+                    @case('map')
+                    @include('admin.default.tpl.form.map',['form_item'=>$form_tpl_item])
+                    @break
+
                 @endswitch
             </div>
         </div>

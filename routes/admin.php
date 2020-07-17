@@ -42,6 +42,8 @@ $route->middleware(['admin_auth'])->name($route_name)->group(function ($route) {
     $route->any('upload/{type}', ['uses' => 'FileUploadController@handle'])->name('upload');
     //导入表格
     $route->any('excel/tpl', ['uses' => 'ExcelController@index'])->name('excel.tpl');
+    //坐标选择器
+    $route->get('map/{type}', 'HomeController@map')->name('map');
 
     //资源路由数组
     $resource = [

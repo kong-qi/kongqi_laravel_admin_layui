@@ -17,4 +17,8 @@ class HomeController extends BaseController
     public function home(){
         return $this->display();
     }
+    public function map($type,Request $request){
+        $this->setViewPath($type.'Map');
+        return $this->display();
+    }
 }

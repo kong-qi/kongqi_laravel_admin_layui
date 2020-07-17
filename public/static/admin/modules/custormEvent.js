@@ -334,7 +334,30 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
       post_url = othis.data('post_url');
       var btn2 = othis.data('btn') || '';
       custormEvent.confirmPost(title, post_url, {}, btn2, 1);
-    }
+    },
+    //打开layui map
+    openMap: function (othis) {
+      var w = othis.data('w');
+      var h = othis.data('h');
+      var title = othis.data('title');
+      var url = othis.data('url');
+      var btn = othis.data('btn') || [appLang.trans('关闭')];
+      var target=$(othis.data('target'));
+
+      yesFun = function (layero, index) {
+        var location=layero.find('iframe').contents().find("#pointInput").val();
+        if(location){
+          target.val(location);
+        }else{
+          layer.msg('请选择坐标');
+          return false;
+        }
+        layer.close(index); //关闭弹层
+      };
+
+      custormEvent.openIframe(w, h, title, url, yesFun,btn)
+
+    },
 
   };
   //点击事件

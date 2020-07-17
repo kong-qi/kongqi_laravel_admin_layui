@@ -246,8 +246,9 @@ class AdminPermissionController extends BaseCurlController
                 'field' => 'sort',
                 'type' => 'text',
                 'name' => '排序',
-                'must' => 0,
-                'verify' => ''
+                'must' => 1,
+                'verify' => '',
+                'default'=>0
 
             ],
             [
@@ -302,7 +303,7 @@ class AdminPermissionController extends BaseCurlController
     public function setListOutputItemExtend($item)
     {
 
-        $item->menu_show = UiService::switchTpl('menu_show', $item);
+        $item->menu_show = UiService::switchTpl('menu_show', $item,'','显示|隐藏');
         $item->handle = UiService::editDelTpl();
         $item->icon = '<i class="' . $item->icon . '"></i>';
         return $item;

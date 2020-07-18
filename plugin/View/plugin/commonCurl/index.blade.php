@@ -14,7 +14,7 @@
             //渲染
             listTable.render(listConfig.index_url, cols, {
                 where: {
-                    query_type: 1
+
                 }
             });
             //监听搜索

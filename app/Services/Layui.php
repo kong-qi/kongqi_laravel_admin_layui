@@ -90,8 +90,8 @@ class Layui implements Ui
 
         //如果单独设置了，则传递单的
         if ($this->show) {
-
-            $v['value'] = $this->show[$v['field']] ?? '';
+            $v['value']=$v['value']??'';
+            $v['value'] = $v['value']?$v['value']:($this->show[$v['field']] ?? '');
         } else {
             $v['value'] = $v['value'] ?? ($v['default'] ?? '');
         }

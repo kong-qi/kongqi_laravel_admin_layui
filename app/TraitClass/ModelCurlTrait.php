@@ -31,12 +31,21 @@ trait ModelCurlTrait
     protected $createEditfootAddJavascript = '';//底部是否增加自己控制的js模板设置，请直接写你的当前模块js写的模板路径例如：footJs,无需写前缀admin.default.adv.
     protected $indexfootAddJavascript = '';//数据列表首页增加自己控制的js模块.跟上面的配置一样
 
-
+    //设置indexRequst默认值
+    public function indexRequestValue(){
+        //设置request默认值
+        //\request()->request->set('nav_id', '');
+    }
+    //设置添加和编辑默认值
+    public function createEditRequestValue(){
+        //\request()->request->set('nav_id', '');
+    }
     /**
      * 创建视图文件
      */
     public function index()
     {
+        $this->indexRequestValue();
         $this->getListConfig();
         $cols = $this->indexCols();
         if ($cols) {
@@ -59,6 +68,7 @@ trait ModelCurlTrait
         $this->shareData(['index_list_tips' => $this->indexTips(),'indexfootAddJavascript '=>$this->indexfootAddJavascript?$this->getOriginBladePath().$this->indexfootAddJavascript:'']);
         //将btn和搜索数据写入到变量里面
         $this->createBladeHtml();
+
         return $this->display($indexShareData ?: []);
     }
 
@@ -294,6 +304,7 @@ trait ModelCurlTrait
      */
     public function create()
     {
+        $this->createEditRequestValue();
         $this->buildUi();
         $this->createFormCurrent='create';
         $this->setOutputUiCreateEditForm();
@@ -318,6 +329,7 @@ trait ModelCurlTrait
      */
     public function edit($id)
     {
+        $this->createEditRequestValue();
         $show = $this->editWhere()->findOrFail($id);
         if (!$show) {
             return $this->bladeError(lang('数据不存在'));

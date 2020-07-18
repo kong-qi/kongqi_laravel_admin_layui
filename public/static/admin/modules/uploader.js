@@ -10,6 +10,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     place: uploadPlace,
     placeUpload: uploadPlaceUp,
     placeEdit: placeEdit,
+    placeVideoEdit:placeVideoEdit,
     icon: iconPlace
   }
 
@@ -375,6 +376,41 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
         callFun && callFun(items.data());
       }
       layer.close(index); //关闭弹层
+    }, function () {
+      //空间时最大化
+      try {
+        if (parent.currentLayerIndex) {
+          parent.layer.restore(parent.currentLayerIndex)
+        }
+      } catch (e) {
+      }
+    });
+  }
+
+  //编辑器视频文件选择
+  //编辑器文件库
+  function placeVideoEdit(callFun) {
+    //不支持多选
+    var  is_more=0;
+    var file_type='video';
+
+    //打开图片空间
+    var url = g_upload_place + '?is_more=' + is_more + '&file_type=' + file_type+'&editor_api=1';
+    //空间时最大化
+    try {
+      if (parent.currentLayerIndex) {
+        parent.layer.full(parent.currentLayerIndex)
+      }
+    } catch (e) {
+    }
+
+    uploadPlaceApi(url, function (layero, index) {
+
+
+      callFun(layero,index,layer);
+
+      //console.log(tabLi.index());
+
     }, function () {
       //空间时最大化
       try {

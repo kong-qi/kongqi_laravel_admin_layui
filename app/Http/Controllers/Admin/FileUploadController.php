@@ -22,12 +22,22 @@ class FileUploadController extends BaseController
     //
     public function handle($type, Request $request)
     {
+        $editor_api=$request->input('editor_api',0);
+
         if ($type == 'upload') {
             return $this->upload($request);
         }
         if ($type == 'list') {
+            if($editor_api && $request->input('file_type')=='video'){
+                $this->setViewPath('video');
+                return $this->display();
+            }
             $this->setViewPath('list');
             return $this->getList($request);
+        }
+        if ($type == 'video') {
+            $this->setViewPath('video');
+            return $this->display();
         }
 
         if ($type == 'api') {

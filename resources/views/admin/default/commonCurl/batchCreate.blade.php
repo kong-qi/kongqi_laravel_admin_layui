@@ -7,6 +7,8 @@
 
 @endsection
 @section('foot_js')
-
+    @if(isset($footAddJavascript) && !empty($footAddJavascript))
+        @includeIf($footAddJavascript)
+    @endif
 
 @endsection

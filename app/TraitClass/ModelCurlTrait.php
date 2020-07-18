@@ -28,6 +28,8 @@ trait ModelCurlTrait
     protected $formSearchSelf = false;//是否单独设置自己的form搜索模板true 表示是
     protected $uiBlade = [];//存储uiBlade数据
     protected $createFormCurrent = '';//创建表单位置标识符，编辑，创建，批量
+    protected $createEditfootAddJavascript = '';//底部是否增加自己控制的js模板设置，请直接写你的当前模块js写的模板路径例如：footJs,无需写前缀admin.default.adv.
+    protected $indexfootAddJavascript = '';//数据列表首页增加自己控制的js模块.跟上面的配置一样
 
 
     /**
@@ -54,7 +56,7 @@ trait ModelCurlTrait
             $this->shareData(['cols' => [$cols]]);
         }
 
-        $this->shareData(['index_list_tips' => $this->indexTips()]);
+        $this->shareData(['index_list_tips' => $this->indexTips(),'indexfootAddJavascript '=>$this->indexfootAddJavascript?$this->getOriginBladePath().$this->indexfootAddJavascript:'']);
         //将btn和搜索数据写入到变量里面
         $this->createBladeHtml();
         return $this->display($indexShareData ?: []);
@@ -296,9 +298,14 @@ trait ModelCurlTrait
         $this->createFormCurrent='create';
         $this->setOutputUiCreateEditForm();
         $this->createBladeHtml();
+        $this->shareData(['footAddJavascript'=>$this->geFootJavascriptBlade()]);
         return $this->display($this->createEditShareData() ?: []);
     }
 
+    public function geFootJavascriptBlade(){
+        $origin_blade_path=$this->getOriginBladePath();
+        return $this->createEditfootAddJavascript?$origin_blade_path.$this->createEditfootAddJavascript:'';
+    }
 
 
 
@@ -323,7 +330,7 @@ trait ModelCurlTrait
         $this->setOutputUiCreateEditForm($show);
         $this->createBladeHtml($show);
 
-        $this->shareData(['show' => $show]);
+        $this->shareData(['show' => $show,'footAddJavascript'=>$this->geFootJavascriptBlade()]);
         return $this->display($this->createEditShareData($show) ?: []);
     }
 
@@ -828,7 +835,7 @@ trait ModelCurlTrait
             );
 
         //设置单元格宽度，自动
-       $this->importTplTableSet($spreadsheet);
+        $this->importTplTableSet($spreadsheet);
 
         return $this->downExcel($spreadsheet, $this->getModelTableName() . '.xlsx');
     }

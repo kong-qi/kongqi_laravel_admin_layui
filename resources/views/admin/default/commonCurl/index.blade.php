@@ -23,4 +23,8 @@
             listTable.sort();
         });
     </script>
+    {{--//追加，上面的配置保留，如果上面需要替换，那么单独设置这个页面--}}
+    @if(isset($indexfootAddJavascript) && !empty($indexfootAddJavascript))
+        @includeIf($indexfootAddJavascript)
+    @endif
 @endsection

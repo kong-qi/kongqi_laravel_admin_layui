@@ -149,6 +149,9 @@ trait BladeTrait
         view()->share($data);
     }
 
+    public function getOriginBladePath(){
+        return $this->getModuleViewPath() . '.' . $this->getControllerOriginViewPath();;
+    }
     /*********************视图部分*************************/
     /**
      * 输出视图
@@ -159,12 +162,13 @@ trait BladeTrait
         $this->setAutoCommonBlade();
 
         $blade = $this->bladePrefix . $this->bladeView;
+        $origin_blade_path=$this->getOriginBladePath();
         $this->shareData([
                 'title' => $this->getPageName(),
                 'theme_blade' => $this->bladeTheme,
                 'base_blade_path' => $this->getModuleViewPath(),
                 'current_base_blade_path' => $this->getModuleViewPath() . '.' . $this->controllerBladePath, //当前的模板会跟随公用设置而改变路径
-                'origin_current_base_blade_path' => $this->getModuleViewPath() . '.' . $this->getControllerOriginViewPath() //当前的模板路径不会跟随改变
+                'origin_current_base_blade_path' => $origin_blade_path, //当前的模板路径不会跟随改变
             ]
 
 

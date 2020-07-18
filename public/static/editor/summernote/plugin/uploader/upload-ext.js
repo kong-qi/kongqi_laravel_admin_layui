@@ -41,7 +41,7 @@
                                     html += '<img src="' + res[i].path + '" alt="' + res[i].tmp_name + '">';
                                 }
                                 context.invoke('editor.pasteHTML', html);
-                            }, '', 1)
+                            }, 'image', 1)
                         });
 
                     }

@@ -84,9 +84,9 @@ class Layui implements Ui
         $v['name'] = lang($v['name']);
         $v['id'] = $v['id'] ?? $v['field'];
 
-        if (isset($v['remove']) && $v['remove'] == 1) {
+        /*if (isset($v['remove']) && $v['remove'] == 1) {
             return false;
-        }
+        }*/
 
         //如果单独设置了，则传递单的
         if ($this->show) {

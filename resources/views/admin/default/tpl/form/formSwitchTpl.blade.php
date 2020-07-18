@@ -3,7 +3,7 @@
     @include('admin.default.'.$form_tpl_item['custorm_blade'])
 @else
     @if($form_tpl_item['type']!='hidden')
-        <div class="layui-form-item">
+        <div class="layui-form-item {{ $form_tpl_item['itemClass']??'' }}">
             @include('admin.default.tpl.form.label',['form_item'=>$form_tpl_item])
             <div class="layui-input-block">
                 @switch($form_tpl_item['type'])

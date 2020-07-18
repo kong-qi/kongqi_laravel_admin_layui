@@ -398,6 +398,7 @@ trait ModelCurlTrait
         $this->createFormCurrent='batch';
         $this->setOutputUiCreateEditForm();
         $this->createBladeHtml();
+        $this->shareData(['footAddJavascript'=>$this->geFootJavascriptBlade()]);
         return $this->display($this->createEditShareData(''));
     }
 

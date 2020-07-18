@@ -163,12 +163,13 @@ trait ModelCurlTrait
     //批量编辑页面
     public function batchIndexData()
     {
-        $item['all_create_url'] = action($this->getRouteInfo('controller_name') . '@batchCreate');
-        $item['all_post_url'] = action($this->getRouteInfo('controller_name') . '@batchCreatePost');
-        $item['import_tpl_url'] = action($this->getRouteInfo('controller_name') . '@importTpl');
-        $item['import_post_url'] = action($this->getRouteInfo('controller_name') . '@importPost');
+        $item['all_create_url'] = action($this->getRouteInfo('controller_name') . '@batchCreate',\request()->all());
+        $item['all_post_url'] = action($this->getRouteInfo('controller_name') . '@batchCreatePost',\request()->all());
+        $item['import_tpl_url'] = action($this->getRouteInfo('controller_name') . '@importTpl',\request()->all());
+        $item['import_post_url'] = action($this->getRouteInfo('controller_name') . '@importPost',\request()->all());
         return $item;
     }
+
 
 
 

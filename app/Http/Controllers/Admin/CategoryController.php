@@ -111,7 +111,7 @@ class CategoryController extends BaseCurlController
 
         ];
         //是否具有批量添加权限
-        if (acan($this->isCanBatch())) {
+        if (($this->isCanBatch())) {
             $data[] = [
                 'class' => 'btn-info',
                 'name' => '批量添加',

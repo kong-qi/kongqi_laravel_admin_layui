@@ -2,7 +2,7 @@
 return [
     'site_name' => 'KongQi Laravel Admin',
     'system_name' => 'KongQi Laravel Admin',
-    'system_version' => '2.0.3',
+    'system_version' => '2.0.4',
     'author' => '好学科技',
     'qq' => '531833998',
     'system_desc' => '快速Laravel PHP后台',

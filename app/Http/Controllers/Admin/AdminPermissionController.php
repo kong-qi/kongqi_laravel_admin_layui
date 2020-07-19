@@ -112,7 +112,7 @@ class AdminPermissionController extends BaseCurlController
 
         ];
         //是否具有批量添加权限
-        if(acan($this->isCanBatch())){
+        if($this->isCanBatch()){
             $data[]=[
                 'class'=>'layui-btn-info',
                 'name' => '批量添加一组权限',

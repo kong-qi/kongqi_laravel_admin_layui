@@ -594,7 +594,7 @@ trait ModelCurlTrait
     protected function batchCreateCheckForm()
     {
         //检验表单
-        return $this->checkForm($this->rq->all(), $this->checkBatchRule(), $this->checkRuleMsg(), $this->checkRuleFieldName());
+        return $this->checkForm($this->checkRuleData($this->rq), $this->checkBatchRule(), $this->checkRuleMsg(), $this->checkRuleFieldName());
 
     }
 
@@ -709,7 +709,7 @@ trait ModelCurlTrait
     protected function saveData($request, $model, $id = '')
     {
         $this->rq = $request;
-        $error = $this->checkForm($request->all(), $this->checkRule($id), $this->checkRuleMsg(), $this->checkRuleFieldName());
+        $error = $this->checkForm($this->checkRuleData($request), $this->checkRule($id), $this->checkRuleMsg(), $this->checkRuleFieldName());
         if (count($error) > 0) {
             return $this->checkFormErrorFormat($error);
         };
@@ -1089,6 +1089,14 @@ trait ModelCurlTrait
     }
 
     /***************验证相关*****************/
+    /**
+     * 设置验证的规则数据
+     * @param $request
+     * @return mixed
+     */
+    public function checkRuleData($request){
+        return $request->all();
+    }
     /**
      * 检查验证规则
      * @param string $id id不为空表示更新操作的表单规则

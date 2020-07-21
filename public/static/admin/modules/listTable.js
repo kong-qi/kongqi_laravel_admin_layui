@@ -354,6 +354,11 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
     custormEvent.confirmPost(title, listConfig.edit_field_url, data, btn, 1, tableNameId);
 
   }
+  //顶部操作，跳转链接
+  function doLink(callFun) {
+    var url = $(this).data('url');
+    window.location.href=url;
+  }
 
 
   /**
@@ -426,6 +431,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
       custormAdd: topCreate,//自定义添加
       import: importHandle,//导入表格
       handle: doHandel,
+      link:doLink
 
     };
     $('.kongqi-handel').on('click', function () {

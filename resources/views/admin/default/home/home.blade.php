@@ -30,7 +30,7 @@
                             <td>{{ lang("当前版本") }}</td>
                             <td>
                                 {{ config('copyright.system_version') }}
-                                <a href="//{{ config('copyright.docs_url') }}" target="_blank"
+                                <a href="{{ config('copyright.docs_url') }}" target="_blank"
                                    style="padding-left: 15px;">{{ lang("文档手册") }}</a>
                             </td>
                         </tr>

@@ -367,5 +367,13 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
     ui_events[attrEvent] && ui_events[attrEvent].call(this, othis);
   });
 
+  //删除
+  $(document).on("click",".iupload-area-img-show-btn",function(){
+    var pObj=$(this).parents(".upload-area");
+    console.log(pObj);
+    pObj.find(".iupload-area-img-show").addClass("none");
+    pObj.find(".upload-area-input").val("");
+    $(this).addClass("none");
+  });
   exports('custormEvent', custormEvent);
 });

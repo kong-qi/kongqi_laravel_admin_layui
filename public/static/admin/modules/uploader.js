@@ -109,7 +109,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
         'data-view_src="' + res.view_src + '" ' +
         'data-oss_type="' + res.oss_type + '" ' +
         'data-origin_path="' + res.origin_path + '">\n' +
-        '    <div class="file-choose-list-item-img "  ui-event="viewImg" data-src="' + res.view_src + '" style="background-image: url(' + res.view_src + ') "></div>\n' +
+        '    <div class="file-choose-list-item-img "  data-src="' + res.view_src + '" style="background-image: url(' + res.view_src + ') "></div>\n' +
         '<div class="file-choose-list-item-name">' + res.tmp_name + '</div>' +
         '<div class="file-choose-list-item-ck layui-form"><div class="layui-unselect layui-form-checkbox " lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div>' +
         '</div>';
@@ -150,6 +150,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       var parentObj = $(that.data("target"));
       //找到图片显示区域
       parentObj.find(".iupload-area-img-show").removeClass('none').attr('src', res.view_src);
+      parentObj.find(".iupload-area-img-show-btn").removeClass('none');
       if (file_type != 'image') {
         //如果是文件，则需要输出文件名
         parentObj.find(".iupload-area-img-show").next('p').remove();
@@ -162,6 +163,29 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
 
   };
 
+  function addInput(input_type){
+    var add_input_html='';
+    switch (input_type) {
+      case 1:
+        add_input_html=' <input type="text" name="json[0][title]" class="layui-input mb-10 js-title" placeholder="标题" id="">';
+
+        break;
+      case 2:
+        add_input_html=' <input type="text" name="json[0][title]" class="layui-input mb-10 js-title" placeholder="标题" id="">';
+        add_input_html+='<textarea name="json[0][content]" class="layui-textarea mb-10 js-content" id="" placeholder="长文本" cols="30" rows="5"></textarea>';
+
+        break;
+      case 3:
+        add_input_html=' <input type="text" name="json[0][title]" class="layui-input mb-10 js-title" placeholder="标题" id="">';
+        add_input_html+='<textarea name="json[0][content]" class="layui-textarea mb-10 js-content" id="" placeholder="长文本" cols="30" rows="5"></textarea>';
+
+        add_input_html+='<input type="text" name="json[0][link]" class="layui-input mb-10 js-link" placeholder="链接" id="">';
+
+        break;
+
+    }
+    return add_input_html;
+  }
   /**
    * 多图上传
    * @param obj 触发对象ID
@@ -186,10 +210,19 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     if (!value_name) {
       value_name = 'path';
     }
+    //表单增加类型
+    var input_type = that.data('input_type') || 0;
+
+    var add_input_html=addInput(input_type);
+
+    //多图上传增加其他html表单内容
+
+
+
 
     return uploadApi(that, file_type, accept_type, function (res) {
       //找到父
-      var html = '<div class="file-choose-list-item upload-area-more-item"' +
+      var html = '<div data-input_type="'+input_type+'" class="file-choose-list-item upload-area-more-item"' +
         'data-tmp_name="' + res.tmp_name + '"' +
         'data-ext="' + res.ext + '" ' +
         'data-type="' + res.type + '"' +
@@ -198,7 +231,8 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
         'data-oss_type="' + res.oss_type + '" ' +
         'data-origin_path="' + res.origin_path + '">\n' +
         '    <div class="file-choose-list-item-img "  ui-event="viewImg" data-src="' + res.view_src + '" style="background-image: url(' + res.view_src + ') "></div>\n' +
-        '    <div class="handle ">\n' +
+        '    ' +add_input_html+
+        '<div class="handle ">\n' +
         '        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm js_left_pic" data-tips="tooltip" ' +
         'title="' + appLang.trans('左移') + '">\n' +
         '            <i class="layui-icon layui-icon-left"></i></button>\n' +
@@ -211,10 +245,15 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
 
       var parentObj = $(that.data("target"));
       parentObj.removeClass('none').find('.file-choose-list').append(html);
-      jsonThumbs(parentObj)
+      //如果存在设置表单属性，则不自动计算
+      if(!input_type){
+        jsonThumbs(parentObj)
+      }
+
     })
 
   };
+
 
   /**
    * 计算图片算出JSON数据复制给对象
@@ -263,7 +302,11 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       $(getup).before(onthis);
     }
     var parentObj = $(this).parents(".upload-area-more");
-    jsonThumbs(parentObj);
+
+    if(!onthis.data('input_type')){
+      jsonThumbs(parentObj);
+    }
+
 
   });
   //下移动
@@ -275,7 +318,9 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       $(getup).after(onthis);
     }
     var parentObj = $(this).parents(".upload-area-more");
-    jsonThumbs(parentObj);
+    if(!onthis.data('input_type')){
+      jsonThumbs(parentObj);
+    }
 
   });
   //删除
@@ -287,8 +332,11 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       btn: [appLang.trans('删除'), appLang.trans('取消')], //按钮
       yes: function (index) {
         onthis.remove();
-        layer.close(index)
-        jsonThumbs(parentObj);
+        layer.close(index);
+
+        if(!onthis.data('input_type')){
+          jsonThumbs(parentObj);
+        }
       }
     });
 
@@ -451,6 +499,12 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     } catch (e) {
     }
 
+    //表单增加类型
+    var input_type = that.data('input_type') || 0;
+
+    var add_input_html=addInput(input_type);
+
+
     uploadPlaceApi(url, function (layero, index) {
       var items = layero.find('iframe').contents().find('.upload-area-more-item.active');
       if (is_more == 1) {
@@ -468,7 +522,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
         var html = '';
         for (var i in img) {
           var res = img[i];
-          html += '<div class="file-choose-list-item upload-area-more-item"' +
+          html += '<div data-input_type="'+input_type+'" class="file-choose-list-item upload-area-more-item"' +
             'data-tmp_name="' + res.tmp_name + '"' +
             'data-ext="' + res.ext + '" ' +
             'data-type="' + res.type + '"' +
@@ -477,7 +531,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
             'data-oss_type="' + res.oss_type + '" ' +
             'data-origin_path="' + res.origin_path + '">\n' +
             '    <div class="file-choose-list-item-img "  ui-event="viewImg" data-src="' + res.view_src + '" style="background-image: url(' + res.view_src + ') "></div>\n' +
-            '    <div class="handle ">\n' +
+            '    '+add_input_html+'<div class="handle ">\n' +
             '        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm js_left_pic" data-tips="tooltip" ' +
             'title="' + appLang.trans('左移') + '">\n' +
             '            <i class="layui-icon layui-icon-left"></i></button>\n' +
@@ -491,7 +545,11 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
 
         var parentObj = $(that.data("target"));
         parentObj.removeClass('none').find('.file-choose-list').append(html);
-        jsonThumbs(parentObj)
+        //如果存在设置表单属性，则不自动计算
+        if(!input_type){
+          jsonThumbs(parentObj)
+        }
+
       } else {
         //如果不是多个
         var res = $(items).data();
@@ -499,6 +557,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
         var parentObj = $(that.data("target"));
         //找到图片显示区域
         parentObj.find(".iupload-area-img-show").removeClass('none').attr('src', res.view_src);
+        parentObj.find(".iupload-area-img-show-btn").removeClass('none');
         if (res.type != 'image') {
           //如果是文件，则需要输出文件名
           parentObj.find(".iupload-area-img-show").next('p').remove();

@@ -35,7 +35,7 @@ class AdminLog extends BaseModel
         }
         return $arr[$key]??'';
     }
-    public function getNameAttribute()
+    public function getTypeNameAttribute()
     {
         //值存在就更新
 

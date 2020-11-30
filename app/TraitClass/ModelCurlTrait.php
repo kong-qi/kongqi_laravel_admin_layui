@@ -945,7 +945,7 @@ trait ModelCurlTrait
         $type = $id ? lang('更新') : lang('创建');
 
         $msg_type = $result ? lang('成功') : lang('失败');
-        $msg_str = lang($this->getPageName()) . ' ' . $type . $msg_type;
+        $msg_str = $this->getPageName() . $type . $msg_type.($this->createEditLastId?'id:'.$this->createEditLastId:'');
         if ($result) {
             $this->allAfterEvent($id ? 'edit' : 'create');
             $this->insertLog($msg_str);

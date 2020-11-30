@@ -110,6 +110,7 @@ class Layui implements Ui
 
             case 'date':
             case 'datetime':
+                $v['event']=$v['type'];
                 $v['type'] = 'text';
                 $v['attr'] = $v['attr'] ?? '';
                 $v['attr'] = $v['attr'] . ' data-lang="' . env('lang') . '" ';
@@ -183,6 +184,7 @@ class Layui implements Ui
             $v['default'] = $v['default'] ?? '';
             $v['value'] = $v['value'] ?? $v['default'];
             $v['addClass']= $v['addClass']??'';
+            $v=$this->createFormInputItem($v);
 
         }
         return $data;

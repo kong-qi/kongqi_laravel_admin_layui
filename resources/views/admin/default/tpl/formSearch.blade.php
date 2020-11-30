@@ -14,6 +14,9 @@
 
 
                 @foreach($search_form_tpl as $form_key=>$form_item)
+                    @if(isset($form_item['remove']) && $form_item['remove']==1)
+                        @continue
+                    @endif
                     @include('admin.default.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
                 @endforeach
 

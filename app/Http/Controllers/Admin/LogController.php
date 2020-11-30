@@ -102,7 +102,10 @@ class LogController extends BaseCurlIndexController
         //赋值到ui数组里面必须是`search`的key值
         $this->uiBlade['search'] = $data;
     }
-
+    public function addListSearchWhere($model)
+    {
+        return $model->where('admin_id',\admin('id'));
+    }
 
 
 }

@@ -36,9 +36,10 @@ trait GetListTrait
 
         $model = $this->getSearchModel($this->setSearchParam($request->all()));
         $model = $this->addListSearchWhere($model);
-        $total = $model->count();
+
         //是否是否关联数据等操作
         $model = $this->setModelRelaction($model);
+        $total = $model->count();//放到後面
         $model = $this->orderBy($model, $order_by_name, $order_by_type);
         $result = $model->forPage($page, $pagesize)->get();
 

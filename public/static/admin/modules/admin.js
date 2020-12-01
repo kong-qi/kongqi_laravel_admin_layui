@@ -736,6 +736,10 @@ layui.define(['view', 'verify', 'uform', 'dropdown', 'custormEvent', 'cacheNav',
 
     setThisRouter(othis);
   });
+  //双击标签页刷新
+  $body.on('dblclick', TABS_HEADER, function () {
+    admin.events.refresh();
+  });
 
   //监听 tabspage 删除
   element.on('tabDelete(' + FILTER_TAB_TBAS + ')', function (obj) {

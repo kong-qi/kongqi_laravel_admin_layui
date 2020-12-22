@@ -89,16 +89,37 @@ class UiService
         return $html;
     }
 
+    /**
+     * 链接跳转
+     * @param $name
+     * @param $url
+     * @param int $is_target
+     * @return string
+     */
     public static function linkTpl($name,$url,$is_target=1){
         $target = $is_target ? 'target="_blank"' : '';
         return '<a class="event-link" href="' . $url . '" ' . $target . '>' . $name . '</a> ';
 
     }
+
+    /**
+     * 事件跳转
+     * @param $name
+     * @param $event
+     * @return string
+     */
     public static function linkEventTpl($name,$event){
 
         return '<a class="event-link" lay-event="'.$event.'" href="javascript:void(0)">' . lang($name) . '</a> ';
 
     }
+
+    /**
+     * 编辑和删除输出html
+     * @param int $hasEdit
+     * @param int $hasDel
+     * @return string
+     */
     public static function editDelTpl($hasEdit=1,$hasDel=1){
 
         $html=[];
@@ -122,7 +143,7 @@ class UiService
      */
     public static function layuiTplShowIframe($name, $url, $tipTitle = '', $w = '100%', $h = '100%')
     {
-        return '<a class="event-link" title="'.$tipTitle.'" data-w="' . $w . '" data-h="' . $h . '" 
+        return '<a class="event-link" title="'.$tipTitle.'"  data-title="'.$tipTitle.'" data-w="' . $w . '" data-h="' . $h . '" 
          title="' . ($tipTitle ?: $name) . '"
          href="javascript:void(0)" data-url="' . $url . '" lay-event="show">' . $name . '</a> ';
     }
@@ -186,6 +207,17 @@ class UiService
             }
         }
         return $html;
+    }
+    /**
+     * tab内嵌打开
+     * @param $name
+     * @param $url
+     * @param string $tips
+     * @return string
+     */
+    public static function linkTabTpl($name,$url,$tips=''){
+
+        return '<a class="event-link" lay-href="' . $url . '" lay-text="'.($tips?:$name).'" >' . $name . '</a> ';
     }
 
 }

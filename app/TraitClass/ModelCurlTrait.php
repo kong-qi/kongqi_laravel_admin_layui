@@ -32,14 +32,18 @@ trait ModelCurlTrait
     protected $indexfootAddJavascript = '';//数据列表首页增加自己控制的js模块.跟上面的配置一样
 
     //设置indexRequst默认值
-    public function indexRequestValue(){
+    public function indexRequestValue()
+    {
         //设置request默认值
         //\request()->request->set('nav_id', '');
     }
+
     //设置添加和编辑默认值
-    public function createEditRequestValue(){
+    public function createEditRequestValue()
+    {
         //\request()->request->set('nav_id', '');
     }
+
     /**
      * 创建视图文件
      */
@@ -65,17 +69,26 @@ trait ModelCurlTrait
             $this->shareData(['cols' => [$cols]]);
         }
 
-        $this->shareData(['index_list_tips' => $this->indexTips(),'indexfootAddJavascript '=>$this->indexfootAddJavascript?$this->getOriginBladePath().$this->indexfootAddJavascript:'']);
+        $this->shareData(
+            [
+                'index_list_tips' => $this->indexTips(),
+                'indexfootAddJavascript' =>$this->getIndexFooterAddJavascript()
+            ]
+        );
         //将btn和搜索数据写入到变量里面
         $this->createBladeHtml();
 
         return $this->display($indexShareData ?: []);
     }
+    public function getIndexFooterAddJavascript(){
+        return $this->indexfootAddJavascript?$this->getOriginBladePath().$this->indexfootAddJavascript:'';
+    }
 
     /**
      * 首页提示内容框
      */
-    public function indexTips(){
+    public function indexTips()
+    {
         return '';
     }
 
@@ -95,7 +108,7 @@ trait ModelCurlTrait
                         $this->shareData(['search_form_tpl' => $this->uiService->createFormSearchInput($v)]);
                         break;
                     case 'btn':
-                        $this->shareData(['index_handle_btn_tpl' => $this->uiService->createBtn($v),'index_handle_btn_number'=>count($v)]);
+                        $this->shareData(['index_handle_btn_tpl' => $this->uiService->createBtn($v), 'index_handle_btn_number' => count($v)]);
                         break;
                     case 'form':
                         $this->shareData(['form_tpl' => $this->uiService->createFormInput($v, $show)]);
@@ -130,8 +143,8 @@ trait ModelCurlTrait
 
                     if ($v2['type'] == 'editor') {
                         $v2['id'] = $v2['id'] ?? $v2['field'];
-                        $v2['editor_type']= $v2['editor_type']??'summernote';
-                        if(empty($v2['editor_type'])){
+                        $v2['editor_type'] = $v2['editor_type'] ?? 'summernote';
+                        if (empty($v2['editor_type'])) {
                             $v2['editor_type'] = 'summernote';
                         }
 
@@ -142,10 +155,10 @@ trait ModelCurlTrait
                     }
                 }
             } else {
-                $v['id']=$v['id']??$v['field'];
+                $v['id'] = $v['id'] ?? $v['field'];
                 if ($v['type'] == 'editor') {
-                    $v['editor_type']= $v['editor_type']??'summernote';
-                    if(empty($v['editor_type'])){
+                    $v['editor_type'] = $v['editor_type'] ?? 'summernote';
+                    if (empty($v['editor_type'])) {
                         $v['editor_type'] = 'summernote';
                     }
                     $editor[] = [
@@ -163,14 +176,12 @@ trait ModelCurlTrait
     //批量编辑页面
     public function batchIndexData()
     {
-        $item['all_create_url'] = action($this->getRouteInfo('controller_name') . '@batchCreate',\request()->all());
-        $item['all_post_url'] = action($this->getRouteInfo('controller_name') . '@batchCreatePost',\request()->all());
-        $item['import_tpl_url'] = action($this->getRouteInfo('controller_name') . '@importTpl',\request()->all());
-        $item['import_post_url'] = action($this->getRouteInfo('controller_name') . '@importPost',\request()->all());
+        $item['all_create_url'] = action($this->getRouteInfo('controller_name') . '@batchCreate', \request()->all());
+        $item['all_post_url'] = action($this->getRouteInfo('controller_name') . '@batchCreatePost', \request()->all());
+        $item['import_tpl_url'] = action($this->getRouteInfo('controller_name') . '@importTpl', \request()->all());
+        $item['import_post_url'] = action($this->getRouteInfo('controller_name') . '@importPost', \request()->all());
         return $item;
     }
-
-
 
 
     /**
@@ -228,6 +239,7 @@ trait ModelCurlTrait
 
         return $data;
     }
+
     public function defaultHandleBtnDelTpl($shareData)
     {
         $data = [];
@@ -271,13 +283,13 @@ trait ModelCurlTrait
     public function getListConfig($listMethod = '')
     {
         $data = [
-            'index_url' => naction($this->getRouteInfo('controller_name').'@getList', request()->all()),//首页列表JSON地址
+            'index_url' => naction($this->getRouteInfo('controller_name') . '@getList', request()->all()),//首页列表JSON地址
             'table_name' => $this->getModelTableName(),
             'page_name' => lang($this->getPageName()),
-            'del_url' => naction($this->getRouteInfo('controller_name').'@destroy'),//删除提交地址
-            'edit_field_url' => naction($this->getRouteInfo('controller_name').'@editTable'),//表格编辑提交地址
-            'create_url' => naction($this->getRouteInfo('controller_name').'@create', request()->all()),//创建页面地址
-            'store_url' => naction($this->getRouteInfo('controller_name').'@store'),
+            'del_url' => naction($this->getRouteInfo('controller_name') . '@destroy'),//删除提交地址
+            'edit_field_url' => naction($this->getRouteInfo('controller_name') . '@editTable'),//表格编辑提交地址
+            'create_url' => naction($this->getRouteInfo('controller_name') . '@create', request()->all()),//创建页面地址
+            'store_url' => naction($this->getRouteInfo('controller_name') . '@store'),
             'open_height' => $this->layuiOpenHeight(),//Layui 弹窗弹出高度
             'open_width' => $this->layuiOpenWidth(),//Layui 弹窗高度窗口
         ];
@@ -307,16 +319,17 @@ trait ModelCurlTrait
     {
         $this->createEditRequestValue();
         $this->buildUi();
-        $this->createFormCurrent='create';
+        $this->createFormCurrent = 'create';
         $this->setOutputUiCreateEditForm();
         $this->createBladeHtml();
-        $this->shareData(['footAddJavascript'=>$this->geFootJavascriptBlade()]);
+        $this->shareData(['footAddJavascript' => $this->getFootJavascriptBlade()]);
         return $this->display($this->createEditShareData() ?: []);
     }
 
-    public function geFootJavascriptBlade(){
-        $origin_blade_path=$this->getOriginBladePath();
-        return $this->createEditfootAddJavascript?$origin_blade_path.$this->createEditfootAddJavascript:'';
+    public function getFootJavascriptBlade()
+    {
+        $origin_blade_path = $this->getOriginBladePath();
+        return $this->createEditfootAddJavascript ? $origin_blade_path . $this->createEditfootAddJavascript : '';
     }
 
 
@@ -343,7 +356,7 @@ trait ModelCurlTrait
         $this->setOutputUiCreateEditForm($show);
         $this->createBladeHtml($show);
 
-        $this->shareData(['show' => $show,'footAddJavascript'=>$this->geFootJavascriptBlade()]);
+        $this->shareData(['show' => $show, 'footAddJavascript' => $this->geFootJavascriptBlade()]);
         return $this->display($this->createEditShareData($show) ?: []);
     }
 
@@ -396,10 +409,10 @@ trait ModelCurlTrait
     public function batchCreate(Request $request)
     {
         $this->buildUi();
-        $this->createFormCurrent='batch';
+        $this->createFormCurrent = 'batch';
         $this->setOutputUiCreateEditForm();
         $this->createBladeHtml();
-        $this->shareData(['footAddJavascript'=>$this->geFootJavascriptBlade()]);
+        $this->shareData(['footAddJavascript' => $this->geFootJavascriptBlade()]);
         return $this->display($this->createEditShareData(''));
     }
 
@@ -945,7 +958,7 @@ trait ModelCurlTrait
         $type = $id ? lang('更新') : lang('创建');
 
         $msg_type = $result ? lang('成功') : lang('失败');
-        $msg_str = $this->getPageName() . $type . $msg_type.($this->createEditLastId?'id:'.$this->createEditLastId:'');
+        $msg_str = $this->getPageName() . $type . $msg_type . ($this->createEditLastId ? 'id:' . $this->createEditLastId : '');
         if ($result) {
             $this->allAfterEvent($id ? 'edit' : 'create');
             $this->insertLog($msg_str);
@@ -1094,9 +1107,11 @@ trait ModelCurlTrait
      * @param $request
      * @return mixed
      */
-    public function checkRuleData($request){
+    public function checkRuleData($request)
+    {
         return $request->all();
     }
+
     /**
      * 检查验证规则
      * @param string $id id不为空表示更新操作的表单规则

@@ -33,7 +33,7 @@
 
 
 ### 最新学习社区-黑白课堂
-http://www.heibaiketang.com
+https://www.heibaiketang.com
 
 ## 安装
 

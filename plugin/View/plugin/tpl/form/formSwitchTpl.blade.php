@@ -1,6 +1,5 @@
-@if($form_tpl_item['type']=='custorm')
-    {{--//完全自定义模板--}}
-    @include('plugin.'.$form_tpl_item['custorm_blade'])
+@if($form_tpl_item['type']=='custom')
+    @include('plugin.'.$form_tpl_item['custom'])
 @else
     @if($form_tpl_item['type']!='hidden')
         <div class="layui-form-item {{ $form_tpl_item['itemClass']??'' }}">
@@ -16,7 +15,6 @@
                     @include('plugin.tpl.form.text',['form_item'=>$form_tpl_item])
                     @break
                     @case('select')
-
                     @include('plugin.tpl.form.select',['form_item'=>$form_tpl_item])
                     @break
                     @case('textarea')
@@ -32,6 +30,10 @@
                     @break
                     @case('img')
                     @include('plugin.tpl.form.img',['form_item'=>$form_tpl_item])
+                    @break
+                    @case('imgInput')
+                    {{--图片上传带输入框--}}
+                    @include('plugin.tpl.form.imgInput',['form_item'=>$form_tpl_item])
                     @break
                     @case('imgMore')
                     @include('plugin.tpl.form.imgMore',['form_item'=>$form_tpl_item])

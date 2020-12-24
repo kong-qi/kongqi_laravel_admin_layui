@@ -4,7 +4,7 @@
             <div class="layui-btn-group">
                 @if(!empty($index_handle_btn_tpl))
                     @foreach($index_handle_btn_tpl as $k=>$v)
-                        @if(isset($v['custorm']) && !empty($v['custorm']))
+                        @if(isset($v['custom']) && !empty($v['custom']))
                             {{--自定义模板--}}
                             @include('admin.default.'.$v['custorm'],['handle_btn_tpl'=>$v])
                         @else

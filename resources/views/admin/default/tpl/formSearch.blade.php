@@ -20,8 +20,6 @@
                     @include('admin.default.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
                 @endforeach
 
-
-
                 <div class="layui-form-item">
                     <div class="layui-input-block " style="margin-left: 0 " >
                         <button class="layui-btn layuiadmin-btn-admin" lay-submit lay-filter="LAY-list-search">

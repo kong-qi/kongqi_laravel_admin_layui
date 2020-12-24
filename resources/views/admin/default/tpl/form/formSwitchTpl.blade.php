@@ -1,6 +1,6 @@
-@if($form_tpl_item['type']=='custorm')
+@if($form_tpl_item['type']=='custom')
     {{--//完全自定义模板--}}
-    @include('admin.default.'.$form_tpl_item['custorm_blade'])
+    @include('admin.default.'.$form_tpl_item['custom_blade'])
 @else
     @if($form_tpl_item['type']!='hidden')
         <div class="layui-form-item {{ $form_tpl_item['itemClass']??'' }}">
@@ -36,6 +36,9 @@
                     @break
                     @case('imgMore')
                     @include('admin.default.tpl.form.imgMore',['form_item'=>$form_tpl_item])
+                    @break
+                    @case('imgInput')
+                    @include('admin.default.tpl.form.imgInput',['form_item'=>$form_tpl_item])
                     @break
                     @case('icon')
                     @include('admin.default.tpl.form.icon',['form_item'=>$form_tpl_item])

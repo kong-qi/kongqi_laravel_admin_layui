@@ -104,10 +104,12 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
    * @param extendFun 附加监听注入
    * @param tableNameId 表格监听名称
    * @param doneFun 请求成功之后回调，可以再列表内增加其他操作，比如是统计之类
+   * @param closeHandelBtnFun 是否取消顶部按钮监听
    */
-  function listTableRender(url, cols, config, extendFun, tableNameId, doneFun) {
+  function listTableRender(url, cols, config, extendFun, tableNameId, doneFun,closeHandelBtnFun) {
     tableNameId = tableNameId || 'LAY-list-table';
     config = config || {};
+
     var defatul_config = {
       elem: '#' + tableNameId,
       page: true,
@@ -137,12 +139,17 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
 
     };
     var render_config = $.extend({}, defatul_config, config);
+
     render_config.where._token = $('[name="csrf-token"]').attr('content');
     table.render(render_config);
     //监听表的事件
     handleListenTable(extendFun);
+    closeHandelBtnFun=closeHandelBtnFun || 0;
     //顶部操作
-    handelTopListenTable();
+    if(!closeHandelBtnFun){
+      handelTopListenTable();
+    }
+
   }
 
   /**
@@ -155,11 +162,18 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
     table.on('tool(' + tableNameId + ')', function (obj) {
       var data = obj.data;
       var url, w, h, title;
+
+      var parent_layui=$(this).data('parent') || 0;
+      var topLayui = layui ;
+      if(parent_layui){
+        topLayui=parent.layui;
+      }
+
       switch (obj.event) {
         //删除询问
         case 'del':
           url = listConfig.del_url;
-          custormEvent.confirmPost(
+          topLayui.custormEvent.confirmPost(
             appLang.trans('确定删除吗?'),
             url, {
               ids: data.id,
@@ -176,7 +190,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
         //post 询问一个赋值
         case 'copy':
           url = data.copy_url;
-          custormEvent.confirmPost(
+          topLayui.custormEvent.confirmPost(
             appLang.trans('确定复制吗?'),
             url, "", "", 1, tableNameId, function (res) {
               callFun && callFun(res)
@@ -187,7 +201,10 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
           url = data.copy_url;
           w = listConfig.open_width;
           h = listConfig.open_height;
-          custormEvent.openIframePost(
+          //是否父级弹窗
+
+
+          topLayui.custormEvent.openIframePost(
             data.edit_url,
             data.edit_post_url,
             w, h,
@@ -203,7 +220,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
         case 'showImg':
           var src = $(this).data('src');
           src = src || $(this).attr('src');
-          custormEvent.viewImg(src);
+          topLayui.custormEvent.viewImg(src);
           break;
         //查看url内容
         case 'show':
@@ -211,7 +228,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
           h = $(this).data('h');
           title = $(this).data('title');
           url = $(this).data('url');
-          custormEvent.openIframe(w, h, title, url, callFun);
+          topLayui.custormEvent.openIframe(w, h, title, url, callFun);
           break;
         //自定义打开iframe 提交地址，需要2个url
         case 'openPost':
@@ -221,7 +238,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
           title = $(this).data('title');
           url = $(this).data('url');
           var post_url = $(this).data('post_url');
-          custormEvent.openIframePost(
+          topLayui.custormEvent.openIframePost(
             url, post_url, w, h, title, btn, tableNameId, function (res) {
               callFun && callFun(res)
             });
@@ -231,7 +248,7 @@ layui.define(['utable', 'uform', 'request', 'laypage', 'layer', 'custormEvent'],
           btn = $(this).data('btn');
           title = $(this).data('title');
           url = $(this).data('url');
-          custormEvent.confirmPost(title, url, '', btn, 1, tableNameId, callFun);
+          topLayui.custormEvent.confirmPost(title, url, '', btn, 1, tableNameId, callFun);
           break;
         case 'openTabUrl':
           var url = $(this).data('url');

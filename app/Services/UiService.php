@@ -89,37 +89,15 @@ class UiService
         return $html;
     }
 
-    /**
-     * 链接跳转
-     * @param $name
-     * @param $url
-     * @param int $is_target
-     * @return string
-     */
     public static function linkTpl($name,$url,$is_target=1){
         $target = $is_target ? 'target="_blank"' : '';
         return '<a class="event-link" href="' . $url . '" ' . $target . '>' . $name . '</a> ';
-
     }
-
-    /**
-     * 事件跳转
-     * @param $name
-     * @param $event
-     * @return string
-     */
     public static function linkEventTpl($name,$event){
 
         return '<a class="event-link" lay-event="'.$event.'" href="javascript:void(0)">' . lang($name) . '</a> ';
 
     }
-
-    /**
-     * 编辑和删除输出html
-     * @param int $hasEdit
-     * @param int $hasDel
-     * @return string
-     */
     public static function editDelTpl($hasEdit=1,$hasDel=1){
 
         $html=[];
@@ -139,11 +117,12 @@ class UiService
      * @param string $tip_title 提示符
      * @param string $w 宽度
      * @param string $h 高度
+     * @param integer $parentLayui 是否父级弹出
      * @return string
      */
-    public static function layuiTplShowIframe($name, $url, $tipTitle = '', $w = '100%', $h = '100%')
+    public static function layuiTplShowIframe($name, $url, $tipTitle = '', $w = '100%', $h = '100%',$parentLayui=0)
     {
-        return '<a class="event-link" title="'.$tipTitle.'"  data-title="'.$tipTitle.'" data-w="' . $w . '" data-h="' . $h . '" 
+        return '<a class="event-link" title="'.$tipTitle.'" data-title="'.$tipTitle.'" data-parent="'.$parentLayui.'" data-w="' . $w . '" data-h="' . $h . '" 
          title="' . ($tipTitle ?: $name) . '"
          href="javascript:void(0)" data-url="' . $url . '" lay-event="show">' . $name . '</a> ';
     }
@@ -157,14 +136,14 @@ class UiService
      * @param string $h
      * @return string
      */
-    public static function layuiTplIframeUrlAndPost($name, $url, $postUrl, $tipTitle = '', $w = '100%', $h = '100%')
+    public static function layuiTplIframeUrlAndPost($name, $url, $postUrl, $tipTitle = '', $w = '100%', $h = '100%',$parentLayui=0)
     {
         return '<a class="event-link" data-w="' . $w . '" data-h="' . $h . '"  data-title="' . ($tipTitle ?: $name) . '"
-         href="javascript:void(0)" data-url="' . $url . '" lay-event="openPost" data-post_url="' . $postUrl . '">' . $name . '</a> ';
+         href="javascript:void(0)" data-url="' . $url . '" lay-event="openPost" data-post_url="' . $postUrl . '" data-parent="'.$parentLayui.'" >' . $name . '</a> ';
     }
 
-    public static function layuiTplImg($src,$w='100px'){
-        return '<img src="'.$src.'" data-src="'.$src.'"  ui-event="viewImg" class="rounded img-fluid" style="width:'.$w.' ">';
+    public static function layuiTplImg($src,$w='100px',$parentLayui=0){
+        return '<img src="'.$src.'" data-src="'.$src.'"  ui-event="viewImg" class="rounded img-fluid" style="width:'.$w.' " data-parent="'.$parentLayui.'">';
     }
 
     /**
@@ -174,12 +153,13 @@ class UiService
      * @param string $tipTitle
      * @param string $w
      * @param string $h
+     * @param integer $parentLayui 是否父级弹出
      * @return string
      */
-    public static function layuiTplUrlPost($name, $url, $tipTitle = '', $w = '500px', $h = '300px')
+    public static function layuiTplUrlPost($name, $url, $tipTitle = '', $w = '500px', $h = '300px',$parentLayui=0)
     {
         return '<a class="event-link" data-w="' . $w . '" data-h="' . $h . '"  data-title="' . ($tipTitle ?: $name) . '"
-         href="javascript:void(0)" lay-event="post" data-url="' . $url . '">' . $name . '</a> ';
+         href="javascript:void(0)" lay-event="post" data-url="' . $url . '" data-parent="'.$parentLayui.'">' . $name . '</a> ';
     }
 
     /**
@@ -208,6 +188,7 @@ class UiService
         }
         return $html;
     }
+
     /**
      * tab内嵌打开
      * @param $name
@@ -220,4 +201,25 @@ class UiService
         return '<a class="event-link" lay-href="' . $url . '" lay-text="'.($tips?:$name).'" >' . $name . '</a> ';
     }
 
+    /**
+     * 列表操作：编辑，复制，删除按钮
+     * @param int $hasEdit
+     * @param int $hasDel
+     * @return string
+     */
+    public static function editDelCopyTpl($hasEdit=1,$hasDel=1){
+
+        $html=[];
+        if($hasEdit){
+            $html[]=self::linkEventTpl('编辑','edit');
+        }
+        if($hasEdit){
+            $html[]=self::linkEventTpl('复制','copy');
+        }
+        if($hasDel){
+            $html[]=self::linkEventTpl('删除','del');
+        }
+        return self::layuiTplArrOutput($html);
+
+    }
 }

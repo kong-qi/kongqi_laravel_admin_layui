@@ -552,7 +552,7 @@ function res_url($path)
             $path = str_replace('http://', 'https://', $path);
         }
 
-        $path = str_replace($res_url, $res_url, $path);
+        $path = str_replace($res_url, "", $path);
         return to_url($res_url . $path);
     } else {
         return $path;

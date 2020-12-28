@@ -403,7 +403,7 @@ trait ModelCurlTrait
     }
 
     /**
-     * 批量操作
+     * 批量操作H
      * @return mixed
      */
     public function batchCreate(Request $request)

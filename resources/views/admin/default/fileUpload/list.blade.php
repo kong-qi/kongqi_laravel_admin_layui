@@ -8,7 +8,7 @@
                 @if(!empty(request()->all()))
                     @foreach(request()->all() as $k=>$v)
                         @if($k!='key')
-                        <input type="hidden" name="{{ $k }}" value="{{ $v }}">
+                            <input type="hidden" name="{{ $k }}" value="{{ $v }}">
                         @endif
                     @endforeach
                 @endif
@@ -28,7 +28,9 @@
                         data-target="#placeArea" data-group_id="{{ request()->input('group_id') }}" data-more="1"
                         data-event="placeUpload"
                         data-accept_type="{{ request()->input('accept_type','file') }}"
-                        data-file_type="{{ request()->input('file_type','file') }}">
+                        data-file_type="{{ request()->input('file_type','file') }}"
+                        data-oss_type="{{  request()->input('oss_type',config('filesystems.default')) }}"
+                >
                     <i class="layui-icon layui-icon-upload"></i> {{ lang('点击上传') }}
                 </button>
             </div>
@@ -73,89 +75,75 @@
 @endsection
 @section('foot_js')
     <script>
-        layui.use(['uploader', 'verify', 'uform', 'request', 'listTable'], function () {
-            var up = layui.uploader;
-            var form = layui.uform;
-            var req = layui.request;
-            var verify = layui.verify;
-            var listTable = layui.listTable;
-            up.placeUpload('[data-event="placeUpload"]');
-            var uploadListUrl = "{!!  admin_url('FileUpload','handle',array_merge(request()->all(),['type'=>'api']))  !!}";
-            var onUrl = "{!! request()->getUri()  !!}";
-            var isMore = "{{ request()->input('is_more') }}";
+      layui.use(['uploader', 'verify', 'uform', 'request', 'listTable'], function () {
+        var up = layui.uploader;
+        var form = layui.uform;
+        var req = layui.request;
+        var verify = layui.verify;
+        var listTable = layui.listTable;
+        up.placeUpload('[data-event="placeUpload"]');
+        var uploadListUrl = "{!!  admin_url('FileUpload','handle',array_merge(request()->all(),['type'=>'api']))  !!}";
+        var onUrl = "{!! request()->getUri()  !!}";
+        var isMore = "{{ request()->input('is_more') }}";
 
 
 
-            //取得列表
-            listTable.custom(".upload-area-list", uploadListUrl);
+        //取得列表
+        listTable.custom(".upload-area-list", uploadListUrl);
 
 
-            //添加分组
-            form.on('submit(addGroup)', function (data) {
-                req.post('{{ route('admin.upload',['type'=>'addGroup']) }}', data.field, function (res) {
-                    var goUrl = '';
-                    goUrl = onUrl.replace(/\?group_id\=\d/g, '');
-                    goUrl = goUrl.replace(/\?group_id\=\d\&/g, '?');
-                    goUrl = goUrl.replace(/\&group_id\=\d/g, '');
-                    if (goUrl.indexOf("?") == -1) {
-                        goUrl += '?group_id=' + res.data.id;
-                    } else {
-                        goUrl += '&group_id=' + res.data.id;
-                    }
-                    if (res.code == 200) {
-                        $("#listGroup").append('<a  href="' + goUrl + '" class="list-group-item list-group-item-action" >' + res.data.name + '</a>');
-                    }
-                })
-                return false;
-
-            });
-
-            var picIndex = 1;
-            $(document).on('click', '.upload-area-more-item', function () {
-
-                if(isMore==1){
-                    $(this).toggleClass('active');
-                    $(this).find('.card').toggleClass('border-primary ');
-                    if ($(this).hasClass('active')) {
-                        $(this).attr('data-index', picIndex);
-                        picIndex++;
-                    } else {
-                        picIndex--
-                    }
-                    console.log( $(this).find('.layui-form-checkbox').toggleClass('layui-form-checked'));
-
-                }else{
-                    $(".upload-area-more-item .card").removeClass('border-primary');
-                    $(".upload-area-more-item ").removeClass('active');
-                    $(this).toggleClass('active');
-                    $(this).find('.card').toggleClass('border-primary ');
-                    $('.upload-area-more-item .layui-form-checkbox').removeClass('layui-form-checked');
-                    $(this).find('.layui-form-checkbox').toggleClass('layui-form-checked');
-
-                }
-
-            })
-
+        //添加分组
+        form.on('submit(addGroup)', function (data) {
+          req.post('{{ route('admin.upload',['type'=>'addGroup']) }}', data.field, function (res) {
+            var goUrl = '';
+            goUrl = onUrl.replace(/\?group_id\=\d/g, '');
+            goUrl = goUrl.replace(/\?group_id\=\d\&/g, '?');
+            goUrl = goUrl.replace(/\&group_id\=\d/g, '');
+            if (goUrl.indexOf("?") == -1) {
+              goUrl += '?group_id=' + res.data.id;
+            } else {
+              goUrl += '&group_id=' + res.data.id;
+            }
+            if (res.code == 200) {
+              $("#listGroup").append('<a  href="' + goUrl + '" class="list-group-item list-group-item-action" >' + res.data.name + '</a>');
+            }
+          })
+          return false;
 
         });
 
+        var picIndex = 1;
+        $(document).on('click', '.upload-area-more-item', function () {
+
+          if(isMore==1){
+            $(this).toggleClass('active');
+            $(this).find('.card').toggleClass('border-primary ');
+            if ($(this).hasClass('active')) {
+              $(this).attr('data-index', picIndex);
+              picIndex++;
+            } else {
+              picIndex--
+            }
+            console.log( $(this).find('.layui-form-checkbox').toggleClass('layui-form-checked'));
+
+          }else{
+            $(".upload-area-more-item .card").removeClass('border-primary');
+            $(".upload-area-more-item ").removeClass('active');
+            $(this).toggleClass('active');
+            $(this).find('.card').toggleClass('border-primary ');
+            $('.upload-area-more-item .layui-form-checkbox').removeClass('layui-form-checked');
+            $(this).find('.layui-form-checkbox').toggleClass('layui-form-checked');
+
+          }
+
+        })
 
 
-     /*   $(".getImg").click(function () {
-            var img = [];
-            $(".upload-area-more-item.active").each(function () {
-                var json = {
-                    index: $(this).data('index'),
-                    img: $(this).find('img').attr('src'),
-                    text: $(this).find('.card-title').text()
-                };
-                img.push(json);
-            });
-            img.sort(function (x, y) {
-                return x.index - y.index
-            });
-            console.log(img);
-        })*/
+      });
+
+
+
+
     </script>
 
 @endsection

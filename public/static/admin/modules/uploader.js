@@ -11,7 +11,8 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     placeUpload: uploadPlaceUp,
     placeEdit: placeEdit,
     placeVideoEdit:placeVideoEdit,
-    icon: iconPlace
+    icon: iconPlace,
+    fileApi:uploadOpenFileApi
   }
 
   /**
@@ -64,7 +65,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       },
       multiple: more,
       accept: accept_type,//接受文件上传的类型
-      before: function () {
+      before: function (res,index,upload) {
 
       },
       done: function (res) {
@@ -74,6 +75,9 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
         } else {
           layer.msg(res.message);
         }
+
+      },
+      error:function (index,upload) {
 
       }
     });
@@ -103,6 +107,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       //找到父
       var html = '<div class="file-choose-list-item upload-area-more-item"' +
         'data-tmp_name="' + res.tmp_name + '"' +
+        'data-size="' + res.size_px + '"' +
         'data-ext="' + res.ext + '" ' +
         'data-type="' + res.type + '"' +
         'data-path="' + res[value_name] + '" ' +
@@ -145,7 +150,9 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     if (that.data('accept_type')) {
       accept_type = that.data('accept_type');
     }
+    //console.log("file_type",file_type);
     return uploadApi(that, file_type, accept_type, function (res) {
+
       //找到父
       var parentObj = $(that.data("target"));
       //找到图片显示区域
@@ -224,6 +231,7 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       //找到父
       var html = '<div data-input_type="'+input_type+'" class="file-choose-list-item upload-area-more-item"' +
         'data-tmp_name="' + res.tmp_name + '"' +
+        'data-size="' + res.size_px + '"' +
         'data-ext="' + res.ext + '" ' +
         'data-type="' + res.type + '"' +
         'data-path="' + res[value_name] + '" ' +
@@ -343,6 +351,11 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
 
   });
 
+  /**
+   * 图标库弹窗
+   * @param that
+   * @param is_more
+   */
   function iconPlace(that, is_more) {
     var custorm_url = that.attr('place_url');
     if (custorm_url) {
@@ -367,8 +380,9 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
       };
       //找到父
       var parentObj = $(that.data("target"));
-      parentObj.find(".iupload-area-img-show").removeClass('none').empty();
+      parentObj.find(".iupload-area-img-show").removeClass('none').removeClass('d-none').empty();
       //如果是文件，则需要输出文件名
+      //iupload-area-img-show
       parentObj.find(".iupload-area-img-show").append('<i class="' + res.icon + '"></i>');
       //表单赋值
       parentObj.find(".upload-area-input").val(res.icon);
@@ -488,9 +502,15 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     if (custorm_url) {
       g_upload_place = custorm_url;
     }
+    var oss_type = that.data('oss_type');
+    if (!oss_type) {
+      oss_type = 'local';
+    }
+    //oss_type驱动
+
 
     //打开图片空间
-    var url = g_upload_place + '?is_more=' + is_more + '&file_type=' + file_type + '&group_id=' + group_id;
+    var url = g_upload_place + '?is_more=' + is_more + '&file_type=' + file_type + '&group_id=' + group_id+'&oss_type='+oss_type;
     //空间时最大化
     try {
       if (parent.currentLayerIndex) {
@@ -600,6 +620,44 @@ layui.define(['uupload', 'layer', 'layerOpen'], function (exports) {
     })
   }
 
+
+  function uploadOpenFileApi(type, is_more, file_type,group_id, callFun) {
+
+    //打开图片空间
+    var url = g_upload_place + '?is_more=' + is_more + '&file_type=' + file_type + '&group_id=' + group_id;
+    //空间时最大化
+    try {
+      if (parent.currentLayerIndex) {
+        parent.layer.full(parent.currentLayerIndex)
+      }
+    } catch (e) {
+    }
+
+    uploadPlaceApi(url, function (layero, index) {
+      var item_img = layero.find('iframe').contents().find('.upload-area-more-item.active');
+
+      var img_arr = [];
+      if (is_more == 1) {
+        item_img.each(function () {
+          img_arr.push($(this).data());
+        });
+
+      } else {
+        img_arr.push(item_img.data());
+      }
+
+      layer.close(index); //关闭弹层
+      return callFun && callFun(img_arr);
+    }, function () {
+      //空间时最大化
+      try {
+        if (parent.currentLayerIndex) {
+          parent.layer.restore(parent.currentLayerIndex)
+        }
+      } catch (e) {
+      }
+    });
+  }
 
   exports('uploader', uploader);
 })

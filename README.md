@@ -124,8 +124,7 @@ UPLOAD_DIR=/upload
 # 最大上传大小,单位M
 UPLOAD_MAX_SIZE=50
 
-
-KONGQI_SERVER=eyJob3N0Ijoid3d3LmtxcDIudGVzdCIsImlwIjoiMTI3LjAuMC4xIiwicG9ydCI6IjgwIn0=
+#是否开启调试debug
 DEBUGBAR_ENABLED=0
 # 是否关闭插件应用，1表示是开启，0表示关闭
 OPEN_PLUGIN=1
@@ -165,8 +164,9 @@ COS_SECRET_KEY=
 COS_TOKEN=null
 #COS桶名称
 COS_BUCKET=
-#COS访问域名
+#COS访问域名,COS_CDN需要补齐http或https
 COS_CDN=
+#COS_SCHEME是http还是https
 COS_SCHEME=https
 COS_CDN_KEY=
 COS_ENCRYPT=

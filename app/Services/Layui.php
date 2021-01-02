@@ -120,7 +120,7 @@ class Layui implements Ui
                 //上传路径接口
                 $v['upload_url'] = $v['upload_url'] ?? '';//单独设置上传接口地址
                 $v['file_type'] = $v['file_type'] ?? '';//上传文件类型
-                $v['oss_type'] = $v['oss_type'] ?? 'local';//上传文件类型
+                $v['oss_type'] = $v['oss_type'] ?? config('filesystems.default');//上传文件类型,这里改成调用自己的默认设置
                 $v['accept_type'] = $v['accept_type'] ?? '';//前端接受的文件上传类型，默认是images
                 $v['group_id'] = $v['group_id'] ?? '';//分组ID
                 $v['place_url'] = $v['place_url'] ?? '';//单独设置文件空间地址

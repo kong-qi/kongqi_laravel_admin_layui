@@ -541,18 +541,32 @@ function to_url($path, $is_https = 0)
  * @param $path
  * @return bool|\Illuminate\Contracts\Routing\UrlGenerator|string
  */
+/**
+ * 取得资源url
+ * @param $path
+ * @return bool|\Illuminate\Contracts\Routing\UrlGenerator|string
+ */
 function res_url($path)
 {
     //是否配置设置了资源单独域名或补齐域名
     $res_url = env('RES_HTTP_URL', '');
     //判断是否开启了补齐域名，去.env获取，默认补齐
-
     if ($res_url) {
-        if (is_https()) {
-            $path = str_replace('http://', 'https://', $path);
+        if(\Illuminate\Support\Str::contains($path,['http','https'])){
+            //分割判断域名是否一样，如果一样的域名则替换为https
+            $path_url_arr=explode("://",$path);
+            $res_url_arr=explode("://",env('RES_HTTP_URL'));
+            //是否在这路径
+            if(!empty($path_url_arr[1]) && !empty($res_url_arr[1]) && \Illuminate\Support\Str::is($res_url_arr[1].'*',$path_url_arr[1])){
+                //替换下http
+                if(is_https()){
+                    $path=str_replace("http://","https://",$path);
+                }
+                return $path;
+            }else{
+                return $path;
+            }
         }
-
-        $path = str_replace($res_url, "", $path);
         return to_url($res_url . $path);
     } else {
         return $path;

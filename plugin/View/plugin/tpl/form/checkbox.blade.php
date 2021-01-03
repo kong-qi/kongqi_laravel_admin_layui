@@ -4,7 +4,7 @@
 
 
             <input lay-filter="{{ $form_item['filter']??'' }}" type="checkbox"
-                   name="{{ $form_item['field']??'' }}[]" {{  ($v['id'] == $form_item['value'] ? 'checked' : '') }}
+                   name="{{ $form_item['field']??'' }}[]" {{  (in_array($v['id'],$form_item['value']) ? 'checked' : '') }}
                    lay-verify="{{ $form_item['verify']??'' }}" class=" {{ $form_item['addClass'] }}"
                    value="{{ $v['id'] }}"  {{ $form_item['attr']??'' }}
                    id="{{ $form_item['field'] }}{{ $v['id']??'' }}" title="{{ lang($v['name']) }}"

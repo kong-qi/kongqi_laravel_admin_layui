@@ -165,9 +165,9 @@ class UploadFile
             //如果是OSS
             if ($oss_type != 'local') {
                 $result['oss_type'] = $oss_type;
-                if (self::addOss($result['ab_path'], $result['path'],$oss_type)) {
+                if (self::addOss($result['ab_path'], $result['origin_path'],$oss_type)) {
                     self::deleteLocalFile($result['ab_path'], 0);//删除自己路径
-                    $result['oss_url'] = Storage::disk($oss_type)->url($result['path']);
+                    $result['oss_url'] = Storage::disk($oss_type)->url($result['origin_path']);
                     $result['oss_thumb_url'] = $result['oss_url'];
                     if ($result['type'] == 'image') {
                         $result['view_src'] = $result['oss_url'];

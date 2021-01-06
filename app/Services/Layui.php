@@ -116,6 +116,7 @@ class Layui implements Ui
                 $v['attr'] = $v['attr'] . ' data-lang="' . env('lang') . '" ';
                 break;
             case 'img':
+            case 'imgInput':
             case 'imgMore':
                 //上传路径接口
                 $v['upload_url'] = $v['upload_url'] ?? '';//单独设置上传接口地址

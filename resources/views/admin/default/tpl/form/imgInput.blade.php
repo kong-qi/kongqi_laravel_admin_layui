@@ -17,12 +17,11 @@
         id="upload{{ (md5($form_item['field'])) }}"
                 data-target="#{{ (md5($form_item['field'])) }}"
                 data-event="upload" data-more="0"
-                class="layui-btn  mr-10"><i class="layui-icon layui-icon-add-1"></i> {{ lang('点击上传') }}
-        </button>
-        <button type="button" data-more="0" data-event="uploadPlace"
+                class="layui-btn layui-btn-sm  mr-10"><i class="layui-icon layui-icon-add-1"></i> {{ lang('点击上传') }}</button>
+        <button type="button" data-more="0"   data-event="uploadPlace"
                 {{ $form_item['place_attr']??'' }}
-                data-target="#{{ (md5($form_item['field']))  }}" class="layui-btn   "><i
-                    class="layui-icon layui-icon-picture"></i> {{ lang('库选择') }}</button>
+                data-target="#{{ (md5($form_item['field']))  }}" class="layui-btn   layui-btn-sm"><i class="layui-icon layui-icon-picture"></i> {{ lang('库选择') }}</button>
+
     </div>
 
 </div>

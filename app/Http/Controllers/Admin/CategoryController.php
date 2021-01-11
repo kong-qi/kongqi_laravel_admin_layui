@@ -240,9 +240,10 @@ class CategoryController extends BaseCurlController
     {
 
         $cate = $this->getModel()->checked()->get()->toArray();
-        $cate=array_merge([['id'=>0,'cn_name'=>'根级','name'=>'','parent_id'=>0]],$cate);
+        $cate=array_merge([['id'=>0,'name'=>'根级','parent_id'=>0]],$cate);
 
         $cate = tree($cate,'id','parent_id','children');
+
 
 
         return [ 'category' => $cate];

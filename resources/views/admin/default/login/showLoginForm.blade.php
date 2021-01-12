@@ -48,11 +48,11 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <div class="layui-form-item mb-20" >
                     <input type="checkbox" name="remember" value="1"  title="{{ lang('记住密码') }}">
 
                 </div>
-                @endif
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid layui-btn-success" lay-submit lay-filter="login-submit">{{ lang('登录') }}</button>
                 </div>

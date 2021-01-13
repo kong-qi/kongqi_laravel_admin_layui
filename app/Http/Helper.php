@@ -306,6 +306,28 @@ function key_value_arr_to_select($arr)
     return $data;
 }
 
+/**
+ * 将数组转成select
+ * @param $arr 数组
+ * @param string $key select数组的索引key
+ * @param string $name_key select数组的取值
+ * @return array
+ */
+function key_value_arr_to_select2($arr, $key = '', $name_key = '')
+{
+    if (empty($arr)) {
+        return [];
+    }
+    $data = [];
+    foreach ($arr as $k => $v) {
+        $data[] = [
+            'id' => $v[$key],
+            'name' => $v[$name_key]
+        ];
+    }
+    return $data;
+}
+
 
 /**
  * 取得路径

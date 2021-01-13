@@ -4,7 +4,7 @@
         $form_item['type'] = 'hidden';
 
     @endphp
-    @include('admin.default.tpl.form.text',['form_item'=>$form_item])
+    @include('plugin.tpl.form.text',['form_item'=>$form_item])
     <div class="mb-10">
         <img style="width:150px"  ui-event="showImg" src="{{ $form_item['value'] }}" class="iupload-area-img-show {{ $form_item['value']?'':'none' }}"  alt="">
         <button class="layui-btn layui-btn-white layui-btn-sm iupload-area-img-show-btn {{ $form_item['value']?'':'none' }}" type="button">删除</button>

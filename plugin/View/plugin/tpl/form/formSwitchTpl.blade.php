@@ -1,5 +1,6 @@
 @if($form_tpl_item['type']=='custom')
-    @include('plugin.'.$form_tpl_item['custom'])
+    {{--//完全自定义模板--}}
+    @include('plugin.'.$form_tpl_item['custom_blade'])
 @else
     @if($form_tpl_item['type']!='hidden')
         <div class="layui-form-item {{ $form_tpl_item['itemClass']??'' }}">
@@ -15,10 +16,10 @@
                     @include('plugin.tpl.form.text',['form_item'=>$form_tpl_item])
                     @break
                     @case('select')
+
                     @include('plugin.tpl.form.select',['form_item'=>$form_tpl_item])
                     @break
                     @case('textarea')
-                    @case('editor')
                     @include('plugin.tpl.form.textarea',['form_item'=>$form_tpl_item])
                     @break
                     @case('radio')
@@ -27,16 +28,17 @@
                     @case('checkbox')
                     @include('plugin.tpl.form.checkbox',['form_item'=>$form_tpl_item])
                     @break
+                    @case('editor')
+                    @include('plugin.tpl.form.textarea',['form_item'=>$form_tpl_item])
                     @break
                     @case('img')
                     @include('plugin.tpl.form.img',['form_item'=>$form_tpl_item])
                     @break
-                    @case('imgInput')
-                    {{--图片上传带输入框--}}
-                    @include('plugin.tpl.form.imgInput',['form_item'=>$form_tpl_item])
-                    @break
                     @case('imgMore')
                     @include('plugin.tpl.form.imgMore',['form_item'=>$form_tpl_item])
+                    @break
+                    @case('imgInput')
+                    @include('plugin.tpl.form.imgInput',['form_item'=>$form_tpl_item])
                     @break
                     @case('icon')
                     @include('plugin.tpl.form.icon',['form_item'=>$form_tpl_item])
@@ -58,3 +60,4 @@
         @include('plugin.tpl.form.text',['form_item'=>$form_tpl_item])
     @endif
 @endif
+

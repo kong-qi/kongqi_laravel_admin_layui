@@ -6,7 +6,7 @@
     <span class="layui-item-text"> {{ $form_item['name'] }}</span>
     @if(isset($form_item['mark']) && !empty($form_item['mark']) )
         <span class="layui-item-mark">
-            ({{ $form_item['mark'] }})
+           ({{ $form_item['mark'] }})
         </span>
     @endif
 </div>

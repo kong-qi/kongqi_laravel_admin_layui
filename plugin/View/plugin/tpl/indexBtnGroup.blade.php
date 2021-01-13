@@ -6,9 +6,9 @@
                 @foreach($index_handle_btn_tpl as $k=>$v)
                     @if(isset($v['custom']) && !empty($v['custom']))
                         {{--自定义模板--}}
-                        @include('admin.default.'.$v['custom'],['handle_btn_tpl'=>$v])
+                        @include('plugin.'.$v['custom'],['handle_btn_tpl'=>$v])
                     @else
-                        @include('admin.default.tpl.form.button',['handle_btn_tpl'=>$v])
+                        @include('plugin.tpl.form.button',['handle_btn_tpl'=>$v])
                     @endif
 
                 @endforeach

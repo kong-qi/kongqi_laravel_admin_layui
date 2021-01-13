@@ -7,7 +7,7 @@
 @else
     @include($current_base_blade_path.'form')
 @endif
-@include('admin.default.tpl.indexTips')
+@include('plugin.tpl.indexTips')
 <div class="layui-card panel">
     <div class="layui-card-header">{{ lang($page_name) }} {{ lang('列表') }}   <div class="panel-action"  >
             <a href="#" data-perform="panel-collapse"><i  title="点击可折叠" class="layui-icon layui-icon-subtraction"></i></a>

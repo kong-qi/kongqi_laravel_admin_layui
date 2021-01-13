@@ -8,7 +8,7 @@
         $form_item['type'] = 'text';
         $form_item['addClass']=$form_item['addClass'].' layui-input-inline w250'
     @endphp
-    @include('admin.default.tpl.form.text',['form_item'=>$form_item])
+    @include('plugin.tpl.form.text',['form_item'=>$form_item])
 
 
     <div class="layui-btn-group">

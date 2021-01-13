@@ -6,7 +6,7 @@
     @endphp
 
     <div class="mb-10 upload-area-more {{ (!isset($form_item['data']) && empty($form_item['data']))?'none':'' }}" id="{{ (md5($form_item['field'])) }}">
-        @include('admin.default.tpl.form.text',['form_item'=>$form_item])
+        @include('plugin.tpl.form.text',['form_item'=>$form_item])
        <div class="file-choose-list">
 
            @if(!empty($form_item['data']))

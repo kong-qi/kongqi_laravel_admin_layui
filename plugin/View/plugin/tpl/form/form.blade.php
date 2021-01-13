@@ -2,7 +2,7 @@
 
 
     @if($form_tpl['is_group'])
-        <div class="layui-card">
+        <div class="layui-card" style="box-shadow:none">
             <div class="layui-tab layui-tab-brief" lay-filter="form-tab">
                 <ul class="layui-tab-title">
                     @foreach($form_tpl['data'] as $form_key=>$form_item)
@@ -16,7 +16,7 @@
                                 @if(isset($form_item['remove']) && $form_item['remove']==1)
                                     @continue
                                 @endif
-                                @include('admin.default.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
+                                @include('plugin.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
                             @endforeach
                         </div>
 
@@ -37,13 +37,12 @@
             @if(isset($form_item['remove']) && $form_item['remove']==1)
                 @continue
             @endif
-            @include('admin.default.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
+            @include('plugin.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
         @endforeach
         <div class="line {{ $showSubmit??'none' }}"></div>
         <div class="mt-35 text-center {{ $showSubmit??'none' }}">
-
-            <button class="layui-btn  " type="button" lay-submit=""
-                    lay-filter="LAY-form-submit" id="LAY-form-submit">{{ lang('提交') }}</button>
+            <button class="layui-btn" type="button" lay-submit="" lay-filter="LAY-form-submit"
+                    id="LAY-form-submit">{{ lang('提交') }}</button>
         </div>
 
 

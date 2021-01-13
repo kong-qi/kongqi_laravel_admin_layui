@@ -14,10 +14,11 @@
 
 
                 @foreach($search_form_tpl as $form_key=>$form_item)
-                    @include('admin.default.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
+                    @if(isset($form_item['remove']) && $form_item['remove']==1)
+                        @continue
+                    @endif
+                    @include('plugin.tpl.form.formSwitchTpl',['form_tpl_item'=>$form_item])
                 @endforeach
-
-
 
                 <div class="layui-form-item">
                     <div class="layui-input-block " style="margin-left: 0 " >

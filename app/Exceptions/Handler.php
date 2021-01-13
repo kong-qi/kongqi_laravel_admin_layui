@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -14,6 +15,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         //
+        ErrorException::class
     ];
 
     /**
@@ -50,6 +52,32 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if($exception instanceof \Illuminate\Http\Exceptions\ThrottleRequestsException){
+            if($request->wantsJson()){
+                return response()->json(['code'=>1,'msg'=>'操作太频繁']);
+            }
+            return abort('401','操作太频繁');
+        }
+        if ($exception instanceof \illuminate\auth\access\authorizationexception) {
+            if($request->wantsJson()){
+                return response()->json(['code'=>1,'msg'=>'没有权限']);
+            }
+            return abort(403,'没有权限');
+        }
+        if ($exception instanceof \Spatie\Permission\Exceptions\UnauthorizedException) {
+            if($request->wantsJson()){
+                return response()->json(['code'=>1,'msg'=>'没有权限']);
+            }
+            return abort(403,'没有权限');
+        }
+        if ($exception instanceof TokenMismatchException) {
+
+            if($request->wantsJson()){
+                return response()->json(['code'=>1,'msg'=>'过期请刷新页面']);
+            }
+            return abort('401','过期请刷新页面');
+        }
         return parent::render($request, $exception);
+
     }
 }

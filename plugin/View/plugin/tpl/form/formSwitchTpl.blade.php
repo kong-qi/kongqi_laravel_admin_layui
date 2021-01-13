@@ -1,6 +1,6 @@
 @if($form_tpl_item['type']=='custom')
     {{--//完全自定义模板--}}
-    @include('plugin.'.$form_tpl_item['custom_blade'])
+    @include('plugin.'.$form_tpl_item['custom_blade'],['form_item'=>$form_tpl_item])
 @else
     @if($form_tpl_item['type']!='hidden')
         <div class="layui-form-item {{ $form_tpl_item['itemClass']??'' }}">

@@ -101,6 +101,7 @@ $route->middleware(['admin_auth'])->name($route_name)->group(function ($route) {
             $route->put('delete/', $c . '@destroy')->name($route_name . ".destroy")->middleware($permission_rule . 'destroy');
             $route->post('edit_list/', $c . '@editTable')->name($route_name . ".edit_list")->middleware($permission_rule . 'edit');
             $route->any('/list', $c . '@getList')->name($route_name . ".list")->middleware($permission_rule . 'index');
+            $route->any('copy/', $c . '@copy')->name($route_name . ".copy")->middleware($permission_rule . 'create');
 
         });
     }
@@ -141,6 +142,7 @@ $route->middleware(['admin_auth'])->name($route_name)->group(function ($route) {
             $route->any('/list', ['uses' => $c . '@getList'])->name($route_name . ".list")->middleware($permission_rule . 'index');
             $route->get('create', $c . '@create')->name($route_name . ".create")->middleware($permission_rule . 'create');
             $route->post('store', $c . '@store')->name($route_name . ".store")->middleware($permission_rule . 'create');
+            $route->any('copy/', $c . '@copy')->name($route_name . ".copy")->middleware($permission_rule . 'create');
         });
     }
     //首页和添加页面，编辑页面
@@ -158,6 +160,7 @@ $route->middleware(['admin_auth'])->name($route_name)->group(function ($route) {
             $route->put('update/{id}', $c . '@update')->name($route_name . ".update")->middleware($permission_rule . 'edit');
             $route->post('edit_list/', $c . '@editTable')->name($route_name . ".edit_list")->middleware($permission_rule . 'edit');
             $route->any('/list', ['uses' => $c . '@getList'])->name($route_name . ".list")->middleware($permission_rule . 'index');
+            $route->any('copy/', $c . '@copy')->name($route_name . ".copy")->middleware($permission_rule . 'create');
         });
     }
     //插件

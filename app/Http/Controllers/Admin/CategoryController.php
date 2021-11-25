@@ -21,7 +21,7 @@ class CategoryController extends BaseCurlController
     //那些页面不共享，需要单独设置的方法
     //设置页面的名称
     public $pageName = '分类栏目';
-    public $denyCommonBladePathActionName = ['index','create','edit'];
+    public $denyCommonBladePathActionName = ['index'];
 
     //1.设置模型
     public function setModel()
@@ -185,6 +185,12 @@ class CategoryController extends BaseCurlController
     //4.编辑和添加页面表单数据
     public function setOutputUiCreateEditForm($show = '')
     {
+        $cate = $this->getModel()->checked()->get()->toArray();
+        $cate=array_merge([['id'=>0,'name'=>'根级','parent_id'=>0]],$cate);
+
+        $cate = tree($cate,'id','parent_id','children');
+
+
         //如果是批量添加位置，需要把name转换成textarea
         $name = [];
         if ($this->createFormCurrent == 'batch') {
@@ -210,8 +216,9 @@ class CategoryController extends BaseCurlController
                 'must' => 1,
                 'verify' => 'rq',
                 'default' => 0,
-                'blade_name'=>'adminPermission.parent',
-                'type'=>'blade',
+                'type'=>'xmSelect',
+                'selectValue'=>$show->parent_id??'0',
+                'data'=>$cate,
             ],
             [
                 'field' => 'sort',
@@ -234,19 +241,6 @@ class CategoryController extends BaseCurlController
         //赋值给UI数组里面,必须是form为key
         $this->uiBlade['form'] = $data;
 
-    }
-    //编辑和添加页面共享数据
-    public function createEditShareData($id = '')
-    {
-
-        $cate = $this->getModel()->checked()->get()->toArray();
-        $cate=array_merge([['id'=>0,'name'=>'根级','parent_id'=>0]],$cate);
-
-        $cate = tree($cate,'id','parent_id','children');
-
-
-
-        return [ 'category' => $cate];
     }
 
     //表单验证

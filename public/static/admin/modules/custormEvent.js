@@ -1,4 +1,4 @@
-layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpicker'], function (exports) {
+layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpicker','xmSelect'], function (exports) {
   var layerOpen = layui.layerOpen; //弹窗
   var req = layui.request;
   var layer = layui.layer;
@@ -6,6 +6,7 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
   var uploader = layui.uploader;//上传
   var laydate = layui.laydate;
   var colorpicker = layui.colorpicker;
+    var xmSelect=layui.xmSelect;//引入xmSelect,使用率蛮高
   var custormEvent = {
     openIframePost: function (url, postUrl, w, h, title, btn, tableNameId, callFun) {
       title = appLang.trans(title);
@@ -255,6 +256,88 @@ layui.define(['layerOpen', 'request', 'utable', 'uploader', 'laydate', 'colorpic
 
   });
 
+    $('[ui-event="xmSelect"]').each(function () {
+        othis = $(this);
+        var height=othis.data('h') || '250px';
+        var el=othis.attr('id');
+        var data=(othis.data('data'));
+        var toInput=othis.data('to');
+        var xs_name=othis.data('bname') || 'name';
+        var xs_id=othis.data('bid') || 'id';
+        var lang=othis.data('lang') || 'cn';
+        var tips=othis.data('tips') || 'cn';
+        var initValue=othis.data('value');
+        initValue=initValue.toString();
+        var setConfig=othis.data('config');
+        var more=othis.data('more');
+        initValue=initValue.split(",");
+        var callFun=othis.data('fun_name');
+
+        var config={
+            el: "#"+el,
+            height: height,
+            data: data,
+            initValue: initValue,
+            model: {
+                label: {type: 'text'}
+            },
+            prop: {
+                name:xs_name,
+                value: xs_id
+            },
+            tips: appLang.trans('请选择')+tips,
+            searchTips: tips,//搜索提示
+            language: lang,//语言包
+            filterable: true,//是否开启搜索
+            //radio: true,//是否开启单选模式
+            clickClose: !more,
+            tree: {
+                show: true,
+                indent: 15,
+                strict: false,
+                expandedKeys: true
+            },
+            //重写搜索方法
+            filterMethod: function (val, item, index, prop) {
+
+
+                if (val == item[xs_name]) {//把value相同的搜索出来
+                    return true;
+                }
+                if (item[xs_name].indexOf(val) != -1) {//名称中包含的搜索出来
+                    return true;
+                }
+
+                return false;//不知道的就不管了
+            },
+            on: function (data) {
+                var arr = data.arr;
+
+                if(callFun  ){
+                    window[callFun](arr,data);
+                }
+
+                if(more){
+                    var ids=arr.map(function(item){
+                        return item.id;
+                    }).filter(function(item){
+                        if( item){
+                            return item
+                        }
+                    }).join(',');
+                    $("#"+toInput).val(ids);
+                }else{
+                    $("#"+toInput).val(arr[0].id);
+                }
+
+            }
+        };
+        if(!more){
+            config.radio=true;
+        }
+        config = $.extend({}, config, setConfig);
+        var insXmSel = xmSelect.render(config);
+    });
 
   collapse();
 

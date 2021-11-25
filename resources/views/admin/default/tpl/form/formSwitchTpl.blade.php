@@ -52,6 +52,12 @@
                     @case('map')
                     @include('admin.default.tpl.form.map',['form_item'=>$form_tpl_item])
                     @break
+                    @case('xmSelect')
+                    @include('admin.default.tpl.form.xmSelect',['form_item'=>$form_tpl_item])
+                    @break
+                    @case('selectDisable')
+                    @include('admin.default.tpl.form.selectDisable',['form_item'=>$form_tpl_item])
+                    @break
 
                 @endswitch
             </div>
